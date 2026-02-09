@@ -1,0 +1,133 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; 
+    color: #000000; 
+}
+
+.checkout-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ccc; /* Fondo ligeramente más claro */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.payment-options {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.payment-btn {
+    padding: 15px 23px;
+    font-size: 20px;
+    border: none;
+    background-color: #141414;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.payment-btn.active, .payment-btn:hover {
+    background-color: #fff; /* Color destacado */
+    color: black;
+}
+
+.payment-form .form-group {
+    margin-bottom: 15px;
+}
+
+.payment-form .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.payment-form .form-group input, 
+.payment-form .form-group select {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #444444;
+    border-radius: 5px;
+    background-color: #ddd;
+    color: rgb(0, 0, 0);
+}
+
+.payment-form .form-group-row {
+    display: flex;
+    gap: 10px;
+}
+
+.payment-form .continue-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000000;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.payment-form .continue-btn:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.cart-summary {
+    margin-top: 30px;
+    padding: 10px;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+
+.cart-summary ul {
+    list-style: none;
+    padding: 0;
+}
+
+.cart-summary ul li {
+    margin: 10px 0;
+}
+
+.cart-summary p {
+    font-size: 1.2rem;
+    text-align: right;
+}
+
+
+/* Estilos para el botón de retroceso */
+.back-button-container {
+    position: absolute;
+    top: 30px;  /* Posición desde la parte superior */
+    left: 30px; /* Posición desde la izquierda */
+    z-index: 1000; /* Asegura que el botón esté por encima de otros elementos */
+}
+
+.back-button {
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 25px;
+    padding: 15px ;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #ccc;
+    color: #000000;
+}

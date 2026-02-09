@@ -1,0 +1,387 @@
+/* Estilos para el login minimalista centrado (Optimizado) */
+
+.auth-modal-overlay {
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    min-height: calc(100vh - 100px);
+    /* Espacio para el footer */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 140px 20px 80px;
+    /* Evita choque con Navbar fixed */
+    background: #fff;
+    overflow-y: visible;
+}
+
+.auth-centered-box {
+    width: 100%;
+    max-width: 420px;
+    padding: 0;
+    text-align: center;
+    position: relative;
+}
+
+.form-content {
+    display: none;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.form-content.show {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-centered-box h1 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+.auth-centered-box p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.auth-centered-box span {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #999;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.auth-centered-box form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.auth-centered-box input {
+    width: 100%;
+    padding: 12px 20px;
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    font-family: inherit;
+    text-align: center;
+    transition: border-color 0.3s;
+    color: #000 !important;
+    /* Asegura visibilidad del texto */
+}
+
+.auth-centered-box input:focus {
+    border-color: #000;
+}
+
+/* Estilo Premium para el Calendario */
+.date-input-group {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.date-input-group label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: #999;
+    text-transform: uppercase;
+    padding-left: 8px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.date-input-wrapper,
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.date-input-wrapper input[type="date"],
+.password-input-wrapper input {
+    position: relative;
+    padding-right: 45px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.password-input-wrapper input {
+    cursor: text;
+    /* Restaurar cursor para texto en password */
+}
+
+/* Ocultamos el icono nativo pero lo dejamos operable solo en el borde derecho */
+.date-input-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40px;
+    /* Solo cubre el area del icono */
+    z-index: 2;
+}
+
+.date-icon {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #000;
+    pointer-events: auto;
+    /* Permite clics */
+    cursor: pointer;
+    z-index: 5;
+    /* Asegura estar sobre el input */
+}
+
+.date-icon,
+.password-toggle-icon {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #000;
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.password-toggle-icon {
+    color: #888;
+    transition: color 0.3s;
+}
+
+.password-toggle-icon:hover {
+    color: #000;
+}
+
+.auth-centered-box button {
+    width: 100%;
+    padding: 15px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.auth-centered-box button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.forgot-link {
+    font-size: 0.8rem;
+    color: #888;
+    text-decoration: none;
+    margin-top: 8px;
+    display: inline-block;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.social-icons a {
+    width: 45px;
+    height: 45px;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #000;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.toggle-hint {
+    margin-top: 25px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.toggle-hint span {
+    color: #000;
+    font-weight: 900;
+    cursor: pointer;
+    text-decoration: underline;
+    display: inline;
+}
+
+.error-msg {
+    color: #e74c3c;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* Back button positioning */
+.backs-button-container {
+    position: fixed;
+    top: 100px;
+    left: 40px;
+    z-index: 2001;
+}
+
+.backs-button {
+    background-color: #000;
+    color: #fff;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* Honeypot field (hidden from humans) */
+.hp-field {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Estilos Premium para Notificaciones (Toast) */
+.toast-container {
+    position: fixed;
+    top: 100px;
+    /* Debajo del navbar */
+    right: 20px;
+    background: #000;
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    min-width: 300px;
+    animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+
+.toast-container.error {
+    border-left: 5px solid #ff4757;
+}
+
+.toast-container.success {
+    border-left: 5px solid #2ed573;
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.toast-icon {
+    font-size: 1.5rem;
+}
+
+.toast-message {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.toast-close {
+    background: transparent;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.toast-close:hover {
+    color: #fff;
+}
+
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    width: 100%;
+    animation: toastProgress 4s linear forwards;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toastProgress {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
+
+@media (max-width: 480px) {
+    .toast-container {
+        width: 90%;
+        right: 5%;
+        top: 80px;
+    }
+}

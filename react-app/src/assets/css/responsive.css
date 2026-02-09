@@ -1,0 +1,238 @@
+/* Responsividad Streetwear Premium */
+
+@media only screen and (max-width: 768px) {
+    .navbar {
+        height: auto;
+        padding: 0 20px;
+    }
+
+    .nav-links {
+        display: none;
+        /* Hide desktop links */
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Product Grid: 2 Columns on Mobile */
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .product-section {
+        padding: 2rem 1rem;
+    }
+
+    .product-section h2 {
+        font-size: 1.5rem;
+        text-align: left;
+    }
+
+    /* Footer Adjustments */
+    .footer-visual {
+        padding: 20px;
+        min-height: 150px;
+    }
+
+    .giant-text {
+        font-size: 18vw;
+        letter-spacing: -2px;
+        /* Fixed: Reduced from -10px to prevent overlap */
+        line-height: 1;
+        /* Fixed: Relaxed line height */
+    }
+
+    .footer-interactive {
+        padding-bottom: 20px;
+    }
+
+    .nav-group {
+        padding: 20px;
+    }
+
+    .social-abstract-container {
+        padding: 20px;
+    }
+
+    .contact-link {
+        font-size: 1.1rem;
+    }
+
+    /* Cart Drawer Width */
+    .cart-overlay {
+        align-items: flex-end;
+    }
+
+    .cart-drawer {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    /* Featured Collections - Mobile Compact */
+    .featured-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .collection-card {
+        min-height: 200px;
+        /* Reduced Mobile Height */
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        background: #f4f4f4;
+    }
+
+    .card-content h3 {
+        font-size: 1.8rem;
+    }
+
+    /* Reset grid area for mobile */
+    .item-0,
+    .item-1,
+    .item-2 {
+        grid-area: auto !important;
+    }
+}
+
+/* Desktop Styles for Featured Grid (Overview) */
+@media only screen and (min-width: 769px) {
+    .featured-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        grid-template-rows: 260px 260px;
+        /* Reduced Desktop Height */
+        gap: 20px;
+        width: 100%;
+        max-width: 1200px;
+        /* More constrained width */
+        margin: 0 auto;
+    }
+
+    .item-0 {
+        grid-area: 1 / 1 / 3 / 2;
+    }
+
+    .item-1 {
+        grid-area: 1 / 2 / 2 / 3;
+    }
+
+    .item-2 {
+        grid-area: 2 / 2 / 3 / 3;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .header h1 {
+        font-size: 2.5rem;
+    }
+
+    .nav-links a {
+        font-size: 0.9rem;
+    }
+}
+
+/* Shared Collection Card Styles */
+.collection-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: #f4f4f4;
+}
+
+.card-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #eee;
+    z-index: 0;
+}
+
+.collection-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    z-index: 1;
+}
+
+.collection-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    transition: background 0.3s;
+}
+
+.card-content {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    z-index: 3;
+    color: #fff;
+}
+
+.card-content .subtitle {
+    display: block;
+    opacity: 0.8;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.card-content h3 {
+    font-size: 2.5rem;
+    fontWeight: 900;
+    text-transform: uppercase;
+    margin: 0;
+    lineHeight: 1;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.card-content .separator {
+    width: 40px;
+    height: 2px;
+    background: #fff;
+    marginTop: 15px;
+}
+
+.collection-card:hover .collection-img {
+    transform: scale(1.05);
+}
+
+.collection-card:hover .collection-overlay {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.view-all-btn {
+    padding: 15px 40px;
+    background: #000;
+    color: #fff;
+    border: none;
+    fontSize: 1rem;
+    fontWeight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.view-all-btn:hover {
+    background: #333;
+    transform: translateY(-2px);
+}

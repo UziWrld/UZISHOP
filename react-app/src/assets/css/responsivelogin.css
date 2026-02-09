@@ -1,0 +1,106 @@
+/* Ajustes generales para pantallas más pequeñas (Específico para Auth Modal) */
+@media (max-width: 768px) {
+    .auth-modal-overlay .container {
+        width: 100%;
+        border-radius: 15px;
+        min-height: 400px;
+    }
+
+    .auth-modal-overlay .container form {
+        padding: 0 20px;
+    }
+
+    .auth-modal-overlay .container p {
+        font-size: 12px;
+    }
+
+    .auth-modal-overlay .container span {
+        font-size: 10px;
+    }
+
+    .auth-modal-overlay .container a {
+        font-size: 12px;
+    }
+
+    .auth-modal-overlay .container button {
+        padding: 8px 30px;
+        font-size: 11px;
+    }
+
+    .auth-modal-overlay .container input {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .auth-modal-overlay .social-icons a {
+        width: 35px;
+        height: 35px;
+        margin: 0 2px;
+    }
+
+    .auth-modal-overlay .toggle-panel {
+        padding: 15px 20px;
+    }
+
+    .auth-modal-overlay .toggle-panel h1 {
+        font-size: 18px;
+    }
+
+    .auth-modal-overlay .toggle-panel p {
+        font-size: 12px;
+    }
+
+    .auth-modal-overlay .toggle-panel button.hidden {
+        font-size: 12px;
+        padding: 6px 15px;
+    }
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .auth-modal-overlay .container {
+        border-radius: 10px;
+        min-height: 350px;
+    }
+
+    .auth-modal-overlay .container p {
+        margin: 10px 0;
+    }
+
+    .auth-modal-overlay .container input {
+        margin: 6px 0;
+        padding: 6px 8px;
+    }
+
+    .auth-modal-overlay .social-icons a {
+        width: 30px;
+        height: 30px;
+    }
+
+    .auth-modal-overlay .toggle-panel h1 {
+        font-size: 16px;
+    }
+
+    .auth-modal-overlay .toggle-panel p {
+        font-size: 10px;
+    }
+
+    .auth-modal-overlay .toggle-panel button.hidden {
+        padding: 5px 10px;
+    }
+}
+
+/* Ajustes para pantallas medianas */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .auth-modal-overlay .container {
+        width: 90%;
+    }
+
+    .auth-modal-overlay .toggle-panel h1 {
+        font-size: 20px;
+    }
+
+    .auth-modal-overlay .toggle-panel p {
+        font-size: 14px;
+    }
+}
