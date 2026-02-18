@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useCollections } from '../hooks/useCollections';
+import { gsap } from 'gsap';
 
 const Navbar = ({ user, onLoginClick, onLogout, onAdminClick, cartCount, onCartClick }) => {
     const { collections: activeCollections } = useCollections();
@@ -12,6 +13,9 @@ const Navbar = ({ user, onLoginClick, onLogout, onAdminClick, cartCount, onCartC
 
     const location = useLocation();
     const navigate = useNavigate();
+    const navRef = useRef(null);
+    const logoRef = useRef(null);
+    const linksRef = useRef([]);
 
     const isHomePage = location.pathname === '/';
     const isCollectionsPage = location.pathname === '/collections';
@@ -23,6 +27,19 @@ const Navbar = ({ user, onLoginClick, onLogout, onAdminClick, cartCount, onCartC
     const toggleMobileGender = (gender) => {
         setActiveMobileGender(activeMobileGender === gender ? null : gender);
     };
+
+    useEffect(() => {
+        // Initial entrance animation - using 'from' so it defaults to visible if animation fails or finishes
+        const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+        tl.from(logoRef.current, { opacity: 0, x: -20, duration: 0.8, clearProps: 'all' })
+            .from(linksRef.current.filter(Boolean), {
+                opacity: 0,
+                y: -10,
+                duration: 0.5,
+                stagger: 0.1,
+                clearProps: 'all'
+            }, '-=0.4');
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -47,6 +64,10 @@ const Navbar = ({ user, onLoginClick, onLogout, onAdminClick, cartCount, onCartC
     useEffect(() => {
         if (mobileMenuOpen) {
             document.body.style.overflow = 'hidden';
+            gsap.fromTo('.mobile-nav-links li',
+                { opacity: 0, x: 20 },
+                { opacity: 1, x: 0, duration: 0.4, stagger: 0.1, ease: 'power2.out' }
+            );
         } else {
             document.body.style.overflow = 'unset';
         }
@@ -120,20 +141,27 @@ const Navbar = ({ user, onLoginClick, onLogout, onAdminClick, cartCount, onCartC
 
     return (
         <>
-            <nav className={navbarClass}>
+            <nav ref={navRef} className={navbarClass}>
                 <div className="navbar-container">
-                    <div className="nav-logo">
+                    <div ref={logoRef} className="nav-logo">
                         <Link to="/">UZISHOP</Link>
                     </div>
 
                     <ul className="nav-links desktop-only">
-                        <li style={{ height: '70px', display: 'flex', alignItems: 'center' }}>
+                        <li
+                            ref={el => linksRef.current[0] = el}
+                            style={{ height: '70px', display: 'flex', alignItems: 'center' }}
+                        >
                             <Link to="/shop" style={{ height: '100%', display: 'flex', alignItems: 'center' }}>ALL</Link>
                         </li>
-                        <li style={{ height: '70px', display: 'flex', alignItems: 'center' }}>
+                        <li
+                            ref={el => linksRef.current[1] = el}
+                            style={{ height: '70px', display: 'flex', alignItems: 'center' }}
+                        >
                             <Link to="/collections" style={{ height: '100%', display: 'flex', alignItems: 'center' }}>COLECCIONES</Link>
                         </li>
                         <li
+                            ref={el => linksRef.current[2] = el}
                             onMouseEnter={() => handleMouseEnter('hombre')}
                             onMouseLeave={handleMouseLeave}
                             style={{ height: '70px', display: 'flex', alignItems: 'center' }}
@@ -142,6 +170,7 @@ const Navbar = ({ user, onLoginClick, onLogout, onAdminClick, cartCount, onCartC
                             {renderMegaMenu('hombre')}
                         </li>
                         <li
+                            ref={el => linksRef.current[3] = el}
                             onMouseEnter={() => handleMouseEnter('mujer')}
                             onMouseLeave={handleMouseLeave}
                             style={{ height: '70px', display: 'flex', alignItems: 'center' }}

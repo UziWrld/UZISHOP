@@ -1,8 +1,31 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { gsap } from 'gsap';
 
 const HeroVideo = () => {
     const navigate = useNavigate();
+    const heroTitleRef = useRef(null);
+    const heroSubtitleRef = useRef(null);
+    const heroBtnRef = useRef(null);
+
+    useEffect(() => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        tl.fromTo(heroSubtitleRef.current,
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1, delay: 0.5 }
+        )
+            .fromTo(heroTitleRef.current,
+                { opacity: 0, y: 50 },
+                { opacity: 1, y: 0, duration: 1 },
+                '-=0.7'
+            )
+            .fromTo(heroBtnRef.current,
+                { opacity: 0, scale: 0.9 },
+                { opacity: 1, scale: 1, duration: 0.8 },
+                '-=0.5'
+            );
+    }, []);
 
     const scrollToCollection = () => {
         const element = document.getElementById('Camisetas'); // Or the first section
@@ -33,8 +56,8 @@ const HeroVideo = () => {
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    opacity: '1', // Changed from 0.6 to 1 to remove darkening
-                    filter: 'saturate(1.2) contrast(1.1)', // Added to boost colors
+                    opacity: '1',
+                    filter: 'saturate(1.2) contrast(1.1)',
                     transform: 'translate(-50%, -50%)'
                 }}
             >
@@ -42,7 +65,7 @@ const HeroVideo = () => {
                 Your browser does not support the video tag.
             </video>
 
-            {/* Overlay Gradient - Made lighter for better visibility while keeping text readable */}
+            {/* Overlay Gradient */}
             <div style={{
                 position: 'absolute',
                 top: 0,
@@ -66,25 +89,40 @@ const HeroVideo = () => {
                 textAlign: 'center',
                 padding: '0 20px'
             }}>
-                <h2 className="hero-subtitle" style={{
-                    fontSize: 'clamp(0.8rem, 2vw, 1.2rem)',
-                    letterSpacing: '5px',
-                    textTransform: 'uppercase',
-                    marginBottom: '1rem',
-                    fontWeight: '600'
-                }}>New Collection</h2>
+                <h2
+                    ref={heroSubtitleRef}
+                    className="hero-subtitle"
+                    style={{
+                        fontSize: 'clamp(0.8rem, 2vw, 1.2rem)',
+                        letterSpacing: '5px',
+                        textTransform: 'uppercase',
+                        marginBottom: '1rem',
+                        fontWeight: '600',
+                        opacity: 0 // Initialize for GSAP
+                    }}
+                >
+                    New Collection
+                </h2>
 
-                <h1 className="hero-title" style={{
-                    fontSize: 'clamp(3rem, 10vw, 6rem)',
-                    fontWeight: '800',
-                    letterSpacing: '-2px',
-                    margin: '0 0 2rem 0',
-                    lineHeight: '0.9',
-                    fontFamily: 'Inter, sans-serif'
-                }}>EDGE CULTURE</h1>
+                <h1
+                    ref={heroTitleRef}
+                    className="hero-title"
+                    style={{
+                        fontSize: 'clamp(3rem, 10vw, 6rem)',
+                        fontWeight: '800',
+                        letterSpacing: '-2px',
+                        margin: '0 0 2rem 0',
+                        lineHeight: '0.9',
+                        fontFamily: 'Inter, sans-serif',
+                        opacity: 0 // Initialize for GSAP
+                    }}
+                >
+                    EDGE CULTURE
+                </h1>
 
                 <div style={{ display: 'flex', gap: '20px' }}>
                     <button
+                        ref={heroBtnRef}
                         className="hero-btn"
                         onClick={scrollToCollection}
                         style={{
@@ -97,7 +135,8 @@ const HeroVideo = () => {
                             cursor: 'pointer',
                             textTransform: 'uppercase',
                             letterSpacing: '2px',
-                            transition: 'all 0.3s ease'
+                            transition: 'all 0.3s ease',
+                            opacity: 0 // Initialize for GSAP
                         }}
                         onMouseEnter={(e) => { e.currentTarget.style.background = '#000'; e.currentTarget.style.color = '#fff'; }}
                         onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#000'; }}

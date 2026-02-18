@@ -2,18 +2,30 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useProducts } from '../../hooks/useProducts';
 import { useNavigate } from 'react-router-dom';
 import { formatCOP } from '../../utils/formatters';
+import { scrollReveal, staggerReveal } from '../../utils/gsap-animations';
 
 const NewArrivals = () => {
     const { allProducts } = useProducts();
     const navigate = useNavigate();
-
-    // Sort by newest and take top 8
-    const latestProducts = [...allProducts]
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .slice(0, 8);
-
+    const sectionRef = useRef(null);
+    const titleRef = useRef(null);
     const scrollContainer = useRef(null);
     const [isPaused, setIsPaused] = useState(false);
+
+    // Sort by newest and take top 8 - Memoize to prevent unnecessary re-renders/animations
+    const latestProducts = React.useMemo(() => {
+        return [...allProducts]
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .slice(0, 8);
+    }, [allProducts]);
+
+    useEffect(() => {
+        if (sectionRef.current && latestProducts.length > 0) {
+            scrollReveal(titleRef.current);
+            const cards = sectionRef.current.querySelectorAll('.product-card-minimal');
+            staggerReveal(cards, 0.3);
+        }
+    }, [latestProducts.length]); // Only re-run if products count changes, to avoid loops
 
     // Auto-scroll logic: 3 seconds interval
     useEffect(() => {
@@ -54,6 +66,7 @@ const NewArrivals = () => {
 
     return (
         <section
+            ref={sectionRef}
             className="new-arrivals"
             style={{ padding: '80px 0', background: '#f9f9f9', overflow: 'hidden' }}
             onMouseEnter={() => setIsPaused(true)}
@@ -61,7 +74,7 @@ const NewArrivals = () => {
         >
             <div style={{ maxWidth: '1600px', margin: '0 auto', padding: '0 5%' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px' }}>
-                    <div>
+                    <div ref={titleRef} style={{ opacity: 0 }}>
                         <h2 style={{ fontSize: '3rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '-1px', margin: 0, color: '#000' }}>New Arrivals</h2>
                         <p style={{ color: '#888', letterSpacing: '2px', fontSize: '0.9rem', marginTop: '10px' }}>FRESH FROM THE LAB</p>
                     </div>
@@ -83,9 +96,9 @@ const NewArrivals = () => {
                         gap: '20px',
                         overflowX: 'auto',
                         paddingBottom: '20px',
-                        scrollbarWidth: 'none', // Firefox
-                        msOverflowStyle: 'none', // IE
-                        scrollBehavior: 'smooth' // Enforce smooth scroll via CSS as well
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none',
+                        scrollBehavior: 'smooth'
                     }}
                 >
                     <style>{`.products-scroll::-webkit-scrollbar { display: none; }`}</style>
@@ -97,12 +110,13 @@ const NewArrivals = () => {
                             onClick={() => navigate(`/product/${product.id}`)}
                             style={{
                                 minWidth: '280px',
-                                maxWidth: '280px', /* Fixed width */
+                                maxWidth: '280px',
                                 cursor: 'pointer',
                                 background: '#fff',
                                 padding: '15px',
                                 transition: 'transform 0.3s',
-                                flexShrink: 0
+                                flexShrink: 0,
+                                opacity: 0 // Initialize for GSAP
                             }}
                             onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-5px)'}
                             onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}

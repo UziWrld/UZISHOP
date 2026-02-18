@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { formatCOP } from '../utils/formatters';
 import { productService } from '../services/productService';
+import { gsap } from 'gsap';
 
 const FREE_SHIPPING_THRESHOLD = 200000;
 
@@ -10,39 +11,91 @@ const Cart = ({ isVisible, toggleVisible, onCheckout, currentUser }) => {
     const { cart, removeFromCart, updateQuantity, totalAmount } = useCart();
     const [upsellProducts, setUpsellProducts] = useState([]);
 
+    const sidebarRef = useRef(null);
+    const backdropRef = useRef(null);
+    const itemsRef = useRef([]); // Ref for cart items
+    const upsellItemsRef = useRef([]); // Ref for upsell items
+
     const progress = Math.min((totalAmount / FREE_SHIPPING_THRESHOLD) * 100, 100);
     const remainingForFree = FREE_SHIPPING_THRESHOLD - totalAmount;
     const navigate = useNavigate();
 
     useEffect(() => {
         if (isVisible) {
+            const tl = gsap.timeline({ defaults: { duration: 0.3, ease: 'power2.out' } });
+
+            // Initial state for GSAP
+            gsap.set(backdropRef.current, { opacity: 0 });
+            gsap.set(sidebarRef.current, { x: '100%' });
+
+            // Animation
+            tl.to(backdropRef.current, { opacity: 1, duration: 0.4 })
+                .to(sidebarRef.current, { x: 0, duration: 0.6, ease: 'power3.out' }, '<0.1');
+
+            if (cart.length > 0) {
+                tl.fromTo(itemsRef.current.filter(Boolean),
+                    { opacity: 0, x: 30 },
+                    { opacity: 1, x: 0, duration: 0.4, stagger: 0.08, clearProps: 'all' },
+                    '-=0.3'
+                );
+            }
+
             const unsubscribe = productService.subscribeToProducts((data) => {
-                // Get 3 random products for upsell that are not in cart
                 const cartIds = new Set(cart.map(item => item.id));
                 const filtered = data.filter(p => !cartIds.has(p.id))
                     .sort(() => 0.5 - Math.random())
                     .slice(0, 3);
                 setUpsellProducts(filtered);
             });
-            return () => unsubscribe();
+            return () => {
+                unsubscribe();
+            };
         }
-    }, [isVisible, cart]);
+    }, [isVisible, cart.length]);
+
+    // Handle exit animation with a more direct approach
+    useEffect(() => {
+        if (!isVisible && sidebarRef.current) {
+            gsap.to(sidebarRef.current, { x: '100%', duration: 0.4, ease: 'power2.in' });
+            gsap.to(backdropRef.current, { opacity: 0, duration: 0.3 });
+        }
+    }, [isVisible]);
+
+    // Effect for upsell products animation when they load
+    useEffect(() => {
+        if (isVisible && upsellProducts.length > 0) {
+            gsap.fromTo(upsellItemsRef.current.filter(Boolean),
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.4, stagger: 0.1, ease: 'power2.out', clearProps: 'all' }
+            );
+        }
+    }, [isVisible, upsellProducts]);
 
     const handleUpsellClick = (product) => {
         toggleVisible();
         navigate(`/product/${product.id}`);
     };
 
+    // Clean up refs
+    useEffect(() => {
+        itemsRef.current = itemsRef.current.slice(0, cart.length);
+    }, [cart]);
+
+    useEffect(() => {
+        upsellItemsRef.current = upsellItemsRef.current.slice(0, upsellProducts.length);
+    }, [upsellProducts]);
+
     return (
         <div className={`cart-sidebar-container ${isVisible ? 'visible' : ''}`}>
             {/* Backdrop */}
             <div
+                ref={backdropRef}
                 className={`cart-backdrop ${isVisible ? 'active' : ''}`}
                 onClick={toggleVisible}
             />
 
             {/* Sidebar */}
-            <div className={`cart-premium-sidebar ${isVisible ? 'open' : ''}`}>
+            <div ref={sidebarRef} className={`cart-premium-sidebar ${isVisible ? 'open' : ''}`} style={{ right: 0, transform: 'translateX(100%)' }}>
                 <div className="cart-premium-header">
                     <div className="header-top">
                         <button className="close-cart-btn" onClick={toggleVisible}>
@@ -73,7 +126,11 @@ const Cart = ({ isVisible, toggleVisible, onCheckout, currentUser }) => {
                     ) : (
                         <div className="cart-items-list">
                             {cart.map((item, index) => (
-                                <div key={`${item.id}-${item.selectedSize}`} className="cart-premium-item">
+                                <div
+                                    key={`${item.id}-${item.selectedSize}`}
+                                    className="cart-premium-item"
+                                    ref={el => itemsRef.current[index] = el}
+                                >
                                     <div className="item-img-box">
                                         <img
                                             src={item.image.startsWith('img/') ? `/${item.image}` : item.image}
@@ -106,8 +163,13 @@ const Cart = ({ isVisible, toggleVisible, onCheckout, currentUser }) => {
                         <div className="upsell-section">
                             <h4>COMPLETA TU OUTFIT</h4>
                             <div className="upsell-grid">
-                                {upsellProducts.map(product => (
-                                    <div key={product.id} className="upsell-item" onClick={() => handleUpsellClick(product)}>
+                                {upsellProducts.map((product, index) => (
+                                    <div
+                                        key={product.id}
+                                        className="upsell-item"
+                                        onClick={() => handleUpsellClick(product)}
+                                        ref={el => upsellItemsRef.current[index] = el}
+                                    >
                                         <img src={product.image.startsWith('img/') ? `/${product.image}` : product.image} alt={product.name} />
                                     </div>
                                 ))}
