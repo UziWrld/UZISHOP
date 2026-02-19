@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Cart from './components/Cart';
 import Footer from './components/Footer';
 
 // Pages
-import HomePage from './pages/HomePage';
-import ProductPage from './pages/ProductPage';
-import AdminPage from './pages/AdminPage';
-import AuthPage from './pages/AuthPage';
-import ResetPasswordPage from './pages/ResetPasswordPage';
-import CheckoutPage from './pages/CheckoutPage';
-import ProfilePage from './pages/ProfilePage';
-import ShopPage from './pages/ShopPage';
-import OrderSuccessPage from './pages/OrderSuccessPage';
-import PaymentSuccessPage from './pages/PaymentSuccessPage';
-import CollectionsPage from './pages/CollectionsPage';
+const HomePage = lazy(() => import('./pages/HomePage'));
+const ProductPage = lazy(() => import('./pages/ProductPage'));
+const AdminPage = lazy(() => import('./pages/AdminPage'));
+const AuthPage = lazy(() => import('./pages/AuthPage'));
+const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'));
+const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage'));
+const ShopPage = lazy(() => import('./pages/ShopPage'));
+const OrderSuccessPage = lazy(() => import('./pages/OrderSuccessPage'));
+const PaymentSuccessPage = lazy(() => import('./pages/PaymentSuccessPage'));
+const CollectionsPage = lazy(() => import('./pages/CollectionsPage'));
 
 import { useAuth } from './context/AuthContext';
 import { useAuthController } from './hooks/useAuthController';
@@ -27,7 +27,7 @@ import './assets/css/cart-premium.css';
 import './assets/css/checkout.css';
 import './assets/css/mobile.css';
 
-import NotFoundPage from './pages/NotFoundPage';
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 import { Navigate } from 'react-router-dom';
 import LoadingScreen from './components/common/LoadingScreen';
 
@@ -109,33 +109,35 @@ const AppContent = () => {
       />
 
       <div className={isAdminRoute ? 'admin-dashboard-wrapper' : (isAuthRoute ? 'auth-page-wrapper-outer' : 'main-content')}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route path="/collections" element={<CollectionsPage />} />
-          <Route path="/product/:id" element={<ProductPage />} />
-          <Route path="/admin/*" element={
-            <AdminRoute user={user} loading={authLoading}>
-              <AdminPage />
-            </AdminRoute>
-          } />
-          <Route path="/login" element={<AuthPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/checkout" element={
-            <PrivateRoute user={user} loading={authLoading}>
-              <CheckoutPage />
-            </PrivateRoute>
-          } />
-          <Route path="/profile" element={
-            <PrivateRoute user={user} loading={authLoading}>
-              <ProfilePage />
-            </PrivateRoute>
-          } />
-          <Route path="/order-success" element={<OrderSuccessPage />} />
-          <Route path="/payment-success" element={<PaymentSuccessPage />} />
-          {/* Catch-all route for 404 */}
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <Suspense fallback={<LoadingScreen />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/shop" element={<ShopPage />} />
+            <Route path="/collections" element={<CollectionsPage />} />
+            <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/admin/*" element={
+              <AdminRoute user={user} loading={authLoading}>
+                <AdminPage />
+              </AdminRoute>
+            } />
+            <Route path="/login" element={<AuthPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/checkout" element={
+              <PrivateRoute user={user} loading={authLoading}>
+                <CheckoutPage />
+              </PrivateRoute>
+            } />
+            <Route path="/profile" element={
+              <PrivateRoute user={user} loading={authLoading}>
+                <ProfilePage />
+              </PrivateRoute>
+            } />
+            <Route path="/order-success" element={<OrderSuccessPage />} />
+            <Route path="/payment-success" element={<PaymentSuccessPage />} />
+            {/* Catch-all route for 404 */}
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
       </div>
 
       <Cart
