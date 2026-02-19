@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import '../assets/css/stylelogin.css';
 import '../assets/css/responsivelogin.css';
-import { useAuth } from '../context/AuthContext';
+import { useAuthController } from '../hooks/useAuthController';
 import Footer from '../components/Footer';
 import Toast from '../components/Toast';
 import PasswordStrength from '../components/PasswordStrength';
@@ -17,18 +17,18 @@ const AuthPage = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const { login, signup, loginWithGoogle, updateProfile, resetPassword, currentUser, userProfile } = useAuth();
+    const { login, signup, loginWithGoogle, updateProfile, resetPassword, user } = useAuthController();
 
 
     // Redirigir directamente al estar autenticado
     useEffect(() => {
-        if (currentUser) {
+        if (user) {
             // Verificar si venía de otra página (ej: checkout)
             const from = location.state?.from || '/';
             console.log("AuthPage: Redirecting to", from, "State:", location.state);
             navigate(from, { replace: true });
         }
-    }, [currentUser, navigate, location]);
+    }, [user, navigate, location]);
 
     // Estados del Formulario
     const [email, setEmail] = useState('');

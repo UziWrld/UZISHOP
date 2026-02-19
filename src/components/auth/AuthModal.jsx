@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../assets/css/stylelogin.css';
 import '../../assets/css/responsivelogin.css';
-import { useAuth } from '../../context/AuthContext';
+import { useAuthController } from '../../hooks/useAuthController';
 
 const AuthModal = ({ isOpen, onClose }) => {
     const [isActive, setIsActive] = useState(false); // false = sign-in, true = sign-up
@@ -15,7 +15,7 @@ const AuthModal = ({ isOpen, onClose }) => {
     const [documento, setDocumento] = useState('');
     const [telefono, setTelefono] = useState('');
 
-    const { login, signup } = useAuth();
+    const { login, signup } = useAuthController();
 
     if (!isOpen) return null;
 

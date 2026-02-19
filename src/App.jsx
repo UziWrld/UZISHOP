@@ -17,7 +17,6 @@ const OrderSuccessPage = lazy(() => import('./pages/OrderSuccessPage'));
 const PaymentSuccessPage = lazy(() => import('./pages/PaymentSuccessPage'));
 const CollectionsPage = lazy(() => import('./pages/CollectionsPage'));
 
-import { useAuth } from './context/AuthContext';
 import { useAuthController } from './hooks/useAuthController';
 import { CartProvider, useCart } from './context/CartContext';
 import { formatCOP } from './utils/formatters';
@@ -57,8 +56,7 @@ const AppContent = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { currentUser } = useAuth();
-  const { user, loading: authLoading, logout } = useAuthController();
+  const { isAuthenticated, user, loading: authLoading, logout } = useAuthController();
   const { cart, removeFromCart, updateQuantity, clearCart, cartCount, totalAmount } = useCart();
 
   useEffect(() => {
@@ -79,7 +77,7 @@ const AppContent = () => {
   };
 
   const goToPayment = () => {
-    if (!currentUser) {
+    if (!isAuthenticated) {
       setIsCartVisible(false); // Close cart before redirecting
       navigate('/login', { state: { from: '/checkout' } });
       return;
@@ -142,9 +140,8 @@ const AppContent = () => {
 
       <Cart
         isVisible={isCartVisible}
-        toggleVisible={() => setIsCartVisible(!isCartVisible)}
+        toggleVisible={() => setIsCartVisible(false)}
         onCheckout={goToPayment}
-        currentUser={currentUser}
       />
       <Footer />
     </div>

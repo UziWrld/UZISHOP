@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuthController } from '../hooks/useAuthController';
 import { orderService } from '../services/orderService';
 import { formatCOP } from '../utils/formatters';
 import Footer from '../components/Footer';
 import '../assets/css/profile.css';
 
 const ProfilePage = () => {
-    const { currentUser, userProfile, updateProfile } = useAuth();
+    const { user, updateProfile } = useAuthController();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [editingAddress, setEditingAddress] = useState(false);
@@ -19,10 +19,10 @@ const ProfilePage = () => {
     });
 
     useEffect(() => {
-        if (currentUser) {
+        if (user) {
             const fetchOrders = async () => {
                 try {
-                    const userOrders = await orderService.getUserOrders(currentUser.uid);
+                    const userOrders = await orderService.getUserOrders(user.uid);
                     setOrders(userOrders);
                 } catch (error) {
                     console.error("ProfilePage: Error fetching orders:", error);
@@ -34,19 +34,19 @@ const ProfilePage = () => {
         } else {
             setLoading(false);
         }
-    }, [currentUser]);
+    }, [user]);
 
     useEffect(() => {
-        if (userProfile && !editingAddress) {
+        if (user && !editingAddress) {
             setEditFormData({
-                cedula: userProfile.cedula || '',
-                address: userProfile.address || '',
-                details: userProfile.details || '',
-                city: userProfile.city || '',
-                phone: userProfile.phone || ''
+                cedula: user.cedula || '',
+                address: user.address || '',
+                details: user.details || '',
+                city: user.city || '',
+                phone: user.phone || ''
             });
         }
-    }, [userProfile, editingAddress]);
+    }, [user, editingAddress]);
 
     const handleEditChange = (e) => {
         const { name, value } = e.target;
@@ -72,7 +72,7 @@ const ProfilePage = () => {
         }
     };
 
-    if (!currentUser) {
+    if (!user) {
         return (
             <div style={{ paddingTop: '150px', textAlign: 'center', minHeight: '100vh' }}>
                 <h2>Debes iniciar sesión para ver tu perfil.</h2>
@@ -87,7 +87,7 @@ const ProfilePage = () => {
             <div className="profile-container">
 
                 <header className="profile-header">
-                    <h1 className="profile-title">HOLA, {userProfile?.nombre?.toUpperCase() || 'USUARIO'}</h1>
+                    <h1 className="profile-title">HOLA, {user?.nombre?.toUpperCase() || 'USUARIO'}</h1>
                     <p className="profile-subtitle">Gestiona tus pedidos y detalles de cuenta.</p>
                 </header>
 
@@ -100,11 +100,11 @@ const ProfilePage = () => {
                             <div className="info-group">
                                 <div>
                                     <p className="info-label">Email</p>
-                                    <p className="info-value">{currentUser.email}</p>
+                                    <p className="info-value">{user.email}</p>
                                 </div>
                                 <div>
                                     <p className="info-label">Nombre</p>
-                                    <p className="info-value">{userProfile?.nombre} {userProfile?.apellidos}</p>
+                                    <p className="info-value">{user?.nombre} {user?.apellidos}</p>
                                 </div>
                             </div>
                         </div>
@@ -157,29 +157,29 @@ const ProfilePage = () => {
                                         <i className='bx bx-id-card address-icon'></i>
                                         <div>
                                             <p className="info-label">Cédula</p>
-                                            <p className="info-value">{userProfile?.cedula || 'No registrada'}</p>
+                                            <p className="info-value">{user?.cedula || 'No registrada'}</p>
                                         </div>
                                     </div>
                                     <div className="address-row">
                                         <i className='bx bx-map address-icon'></i>
                                         <div>
                                             <p className="info-label">Dirección</p>
-                                            <p className="info-value">{userProfile?.address || 'Sin dirección'}</p>
-                                            {userProfile?.details && <p style={{ margin: 0, fontSize: '0.85rem', color: '#666' }}>{userProfile?.details}</p>}
+                                            <p className="info-value">{user?.address || 'Sin dirección'}</p>
+                                            {user?.details && <p style={{ margin: 0, fontSize: '0.85rem', color: '#666' }}>{user?.details}</p>}
                                         </div>
                                     </div>
                                     <div className="address-row">
                                         <i className='bx bx-buildings address-icon'></i>
                                         <div>
                                             <p className="info-label">Ciudad</p>
-                                            <p className="info-value">{userProfile?.city}</p>
+                                            <p className="info-value">{user?.city}</p>
                                         </div>
                                     </div>
                                     <div className="address-row">
                                         <i className='bx bx-phone address-icon'></i>
                                         <div>
                                             <p className="info-label">Teléfono</p>
-                                            <p className="info-value">{userProfile?.phone || 'No registrado'}</p>
+                                            <p className="info-value">{user?.phone || 'No registrado'}</p>
                                         </div>
                                     </div>
                                 </div>

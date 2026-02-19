@@ -7,7 +7,7 @@ import { gsap } from 'gsap';
 
 const FREE_SHIPPING_THRESHOLD = 200000;
 
-const Cart = ({ isVisible, toggleVisible, onCheckout, currentUser }) => {
+const Cart = ({ isVisible, toggleVisible, onCheckout }) => {
     const { cart, removeFromCart, updateQuantity, totalAmount } = useCart();
     const [upsellProducts, setUpsellProducts] = useState([]);
 

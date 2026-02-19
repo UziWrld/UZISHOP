@@ -4,7 +4,7 @@ import { useCheckoutController } from '../hooks/useCheckoutController';
 import { useNavigate, Link } from 'react-router-dom';
 import { formatCOP } from '../utils/formatters';
 import Toast from '../components/Toast';
-import { useAuth } from '../context/AuthContext';
+import { useAuthController } from '../hooks/useAuthController';
 
 const COLOMBIAN_CITIES = [
     "Bucaramanga", "Floridablanca", "Girón", "Piedecuesta",
@@ -16,7 +16,7 @@ const CheckoutPage = () => {
     const { cart, clearCart } = useCart();
     const navigate = useNavigate();
     const [toast, setToast] = useState(null);
-    const { currentUser } = useAuth();
+    const { isAuthenticated } = useAuthController();
 
     const {
         formData,
@@ -78,7 +78,7 @@ const CheckoutPage = () => {
                     <section className="checkout-section">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h3 className="checkout-section-title">Contacto</h3>
-                            {!currentUser && <span style={{ fontSize: '0.8rem' }}>¿Ya tienes cuenta? <Link to="/login" style={{ color: '#000' }}>Inicia sesión</Link></span>}
+                            {!isAuthenticated && <span style={{ fontSize: '0.8rem' }}>¿Ya tienes cuenta? <Link to="/login" style={{ color: '#000' }}>Inicia sesión</Link></span>}
                         </div>
                         <div className="checkout-input-group">
                             <input
