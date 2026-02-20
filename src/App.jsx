@@ -60,12 +60,10 @@ const AppContent = () => {
   const { cart, removeFromCart, updateQuantity, clearCart, cartCount, totalAmount } = useCart();
 
   useEffect(() => {
-    // Premium Splash Screen Effect over 2 seconds
-    const timer = setTimeout(() => {
+    if (!authLoading) {
       setInitialLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
+    }
+  }, [authLoading]);
 
   const onLogout = async () => {
     try {
