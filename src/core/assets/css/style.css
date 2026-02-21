@@ -1,0 +1,1283 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css');
+
+/* Loading Screen for Protected Routes */
+/* Premium Loading Screen */
+/* TACTICAL PREMIUM LOADING SCREEN */
+.uzu-loading-screen-tactical {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #080808;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+}
+
+.corner {
+    position: absolute;
+    font-size: 1.5rem;
+    font-weight: 300;
+    opacity: 0.5;
+    color: #fff;
+}
+
+.top-left {
+    top: 30px;
+    left: 30px;
+}
+
+.top-right {
+    top: 30px;
+    right: 30px;
+}
+
+.bottom-left {
+    bottom: 30px;
+    left: 30px;
+}
+
+.bottom-right {
+    bottom: 30px;
+    right: 30px;
+}
+
+.loader-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 300px;
+}
+
+.tactical-logo {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 3rem;
+    letter-spacing: -2px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.loading-line-container {
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.loading-line-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 40%;
+    background: #fff;
+    animation: loading-shuttle 1.5s ease-in-out infinite;
+}
+
+.tactical-status {
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    opacity: 0.5;
+    color: #fff;
+    text-transform: uppercase;
+    animation: tactical-blink 3s infinite;
+}
+
+/* Carousel Buttons */
+.carousel-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 1px solid #000;
+    background: transparent;
+    color: #000;
+}
+
+.carousel-btn:hover {
+    background: #000;
+    color: #fff;
+    transform: scale(1.05);
+    /* Subtle scale for premium feel */
+}
+
+.carousel-btn.active {
+    background: #000;
+    color: #fff;
+
+    /* Reset y variables */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* General */
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    body {
+        color: black;
+        background-color: #f8f8f8;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .App {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    /* Header deprecado (ahora integrado en Navbar) */
+    .header {
+        display: none;
+    }
+}
+
+/* Navbar Unificada Streetwear Premium */
+.navbar {
+    background: #000;
+    padding: 0 40px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 2000;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Fully Transparent for Immersive Pages (Home, Collections) - ONLY at top */
+.navbar.at-immersive:not(.scrolled):not(.menu-open) {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+/* Solid White when Scrolled on Immersive Pages */
+.navbar.at-immersive.scrolled {
+    background: #ffffff !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* White Text ONLY for Immersive State when NOT scrolled */
+.navbar.at-immersive:not(.scrolled):not(.menu-open) .nav-logo a,
+.navbar.at-immersive:not(.scrolled):not(.menu-open) .nav-links li a,
+.navbar.at-immersive:not(.scrolled):not(.menu-open) .nav-actions .bx,
+.navbar.at-immersive:not(.scrolled):not(.menu-open) .nav-actions button,
+.navbar.at-immersive:not(.scrolled):not(.menu-open) .hamburger-btn i,
+.navbar.at-immersive:not(.scrolled):not(.menu-open) .nav-login-btn {
+    color: #fff !important;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Exception: ONLY when Mega Menu is open, it needs a solid background for readability */
+.navbar.menu-open {
+    background: #ffffff !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.navbar.menu-open .nav-logo a,
+.navbar.menu-open .nav-links li a,
+.navbar.menu-open .nav-actions .bx,
+.navbar.menu-open .nav-login-btn {
+    color: #000 !important;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Navbar en otras paginas (siempre solida) o cuando el menu este abierto */
+.navbar.not-at-home,
+.navbar.menu-open {
+    background: #ffffff !important;
+}
+
+.navbar-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo */
+.nav-logo {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.nav-logo a {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #000;
+    text-decoration: none;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+.navbar.at-home:not(.scrolled):not(.menu-open) .nav-logo a {
+    color: #fff;
+}
+
+/* Links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    height: 70px;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.nav-links li a {
+    color: rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.navbar.at-home:not(.scrolled):not(.menu-open) .nav-links li a {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.nav-links li a:hover {
+    color: #000;
+    transform: translateY(-2px);
+}
+
+.navbar.at-home:not(.scrolled):not(.menu-open) .nav-links li a:hover {
+    color: #fff;
+}
+
+/* L??nea animada Premium */
+.nav-links li a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #000;
+    transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.navbar.at-immersive:not(.scrolled):not(.menu-open) .nav-links li a::after {
+    background: #fff;
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
+}
+
+/* Mega Menu Styles - Solid Luxe White */
+.mega-menu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    padding: 50px 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.08);
+    z-index: 1999;
+}
+
+.mega-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.mega-menu-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+.mega-column-title {
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #000;
+    margin-bottom: 30px;
+    display: block;
+    opacity: 0.9;
+    border-bottom: 1.5px solid #000;
+    padding-bottom: 8px;
+    width: fit-content;
+}
+
+.mega-links-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mega-link-premium {
+    position: relative;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.5) !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 1px !important;
+    transition: all 0.3s ease;
+    display: inline-block;
+    width: fit-content;
+    padding-bottom: 5px;
+}
+
+.mega-link-premium:hover {
+    color: #000 !important;
+}
+
+.link-hover-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background: #000;
+    transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    opacity: 0;
+}
+
+.mega-link-premium:hover .link-hover-line {
+    width: 100%;
+    opacity: 1;
+}
+
+.mega-featured-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Columnas con im??genes re-activadas para "Nueva Colecci??n" */
+.mega-image-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 15px;
+    background: #f0f0f0;
+}
+
+.mega-dynamic-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Mobile Menu Updates - Accordion */
+.mobile-menu-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.mobile-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10px;
+    background: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.mobile-group-header:active {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.mobile-group-title {
+    color: #000;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.mobile-group-header i {
+    color: #000;
+    font-size: 1.1rem;
+    opacity: 0.5;
+}
+
+.mobile-group-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px;
+}
+
+.mobile-group-content.open {
+    max-height: 500px;
+    /* Arbitrary large height */
+    margin-top: 10px;
+}
+
+.mobile-menu-link.main-link {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 30px;
+    align-self: flex-start;
+    padding-left: 20px;
+}
+
+.mobile-menu-link.view-all {
+    font-weight: 700;
+    margin-top: 15px;
+    color: #000;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    opacity: 0.9;
+}
+
+.mobile-menu-link.sub-link {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    letter-spacing: 1px;
+}
+
+/* Acciones */
+.nav-actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-cart-btn {
+    background: transparent;
+    border: none;
+    color: inherit !important;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.nav-cart-btn:hover {
+    transform: scale(1.1);
+}
+
+.cart-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #000;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.navbar.at-immersive:not(.menu-open) .cart-badge {
+    border-color: #000;
+    background: #fff;
+    color: #000;
+}
+
+.nav-login-btn {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+}
+
+.nav-login-btn:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+.user-nav-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.welcome-text {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.user-nav-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-icon-btn {
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-size: 1.3rem;
+    /* Tamaño más equilibrado y profesional */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    padding: 8px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.nav-icon-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+.navbar.at-immersive:not(.menu-open) .nav-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-icon-btn i {
+    display: block;
+}
+
+.nav-btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.admin-btn {
+    background: transparent;
+    border: 1px solid currentColor;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 900;
+    margin-right: 15px;
+    color: inherit;
+}
+
+.admin-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.navbar.not-at-home .admin-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* User Dropdown */
+.user-dropdown-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    min-width: 180px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 2001;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.user-dropdown-container:hover .user-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(5px);
+}
+
+.user-dropdown a,
+.user-dropdown button {
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #000 !important;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: left;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.user-dropdown a:hover,
+.user-dropdown button:hover {
+    background: #f8f8f8;
+    padding-left: 25px;
+}
+
+.logout-btn {
+    color: #000 !important;
+    opacity: 0.4;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    opacity: 1;
+    color: #e74c3c !important;
+    background: rgba(231, 76, 60, 0.05) !important;
+}
+
+.navbar.at-immersive:not(.menu-open) .logout-btn {
+    color: #fff !important;
+    opacity: 0.6;
+}
+
+.navbar.at-immersive:not(.menu-open) .logout-btn:hover {
+    color: #ff5e4d !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    opacity: 1;
+}
+
+.footer {
+    background-color: #ccc;
+    color: black;
+    padding: 20px;
+    text-align: center;
+    font-size: 30px;
+    margin-top: auto;
+}
+
+/* Product Sections */
+.product-section {
+    padding: 3rem 4rem;
+}
+
+.product-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.4rem;
+    color: #333;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Grid Layout */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    padding: 1rem;
+    justify-items: center;
+}
+
+.product-card {
+    background-color: transparent;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+}
+
+.product-card h3 {
+    font-size: 1.4rem;
+    margin: 0.8rem 0 0.5rem 0;
+    color: #555;
+}
+
+.product-card .price {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+}
+
+/* Botones de producto */
+.product-card button {
+    font-size: 1rem;
+    color: black;
+    border: 2px solid black;
+    padding: 10px 20px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.product-card button:hover {
+    background-color: black;
+    color: white;
+}
+
+/* Bot??n See More */
+.see-more-button {
+    display: block;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    margin: 2rem auto;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+    max-width: 200px;
+}
+
+.see-more-button:hover {
+    background-color: #444;
+    transform: translateY(-2px);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedor Principal */
+.main-content {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 70px;
+    /* Espacio para el navbar fixed */
+}
+
+/* En Home y Colecciones es transparente, no queremos padding inicial */
+.main-content:has(.hero-video-container),
+.main-content:has(.collections-immersive-container) {
+    padding-top: 0;
+}
+
+.main-content .product-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 3rem 20px;
+}
+
+.admin-dashboard-wrapper {
+    width: 100%;
+    flex: 1;
+    padding-top: 70px;
+}
+
+.auth-page-wrapper-outer {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    /* Vertical stacking */
+    overflow-y: auto;
+    /* Allow scrolling to footer */
+    position: relative;
+    /* Changed from fixed to allow normal flow if needed, or keep fixed but with column */
+    z-index: 1000;
+}
+
+/* Footer normal para el login (claro) */
+.App:has(.auth-page-wrapper-outer) .footer {
+    background-color: #eee;
+    color: #000;
+    border-top: 1px solid #ddd;
+    padding: 30px;
+    font-size: 1.2rem;
+}
+
+
+@media only screen and (width: 768px) {
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .login-button {
+        margin-top: 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.learn-more {
+    font-size: 14px;
+    color: black;
+    border: 2px solid black;
+    padding: 10px 20px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.learn-more:hover {
+    background-color: black;
+    color: white;
+}
+
+.text-column,
+.image-column {
+    flex: 1;
+}
+
+.text-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 2rem;
+}
+
+.text-column h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.text-column .description {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.learn-more {
+    font-size: 1rem;
+    color: black;
+    border: 2px solid black;
+    padding: 10px 20px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.learn-more:hover {
+    background-color: black;
+    color: white;
+}
+
+
+.new-collection-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 4rem;
+}
+
+.image-column img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+#cartContainer {
+    display: none;
+    background-color: rgb(244, 244, 244);
+    padding: 20px;
+    border-radius: 8px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: fixed;
+    z-index: 1000;
+    display: block;
+    background-color: rgb(244, 244, 244);
+    padding: 30px;
+    border-radius: 8px;
+    width: 500px;
+    right: 90px;
+    bottom: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
+}
+
+#cartContainer.show {
+    display: block;
+}
+
+#cartContainer h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#cartItems {
+    margin-bottom: 150px;
+}
+
+#cartItems li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 0;
+    align-content: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 100%;
+
+}
+
+#cartItems img {
+    width: 70px;
+    height: 70px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.item-info {
+    flex: 1;
+    margin-right: 10px;
+}
+
+button {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    align-content: center;
+    font-size: 20px;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+button:focus {
+    outline: none;
+}
+
+#cleanCartButton {
+    background-color: #f44336;
+    color: white;
+    margin-right: 10px;
+}
+
+#checkoutButton {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.button-container {
+    position: sticky;
+    bottom: 0;
+    /* Fijar al fondo del contenedor visible */
+    background-color: rgb(244, 244, 244);
+    padding: 7px 16;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #ddd;
+    /* L??nea separadora */
+}
+
+.cart-floating-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #000;
+    color: white;
+    border: none;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart-floating-btn:hover {
+    background-color: #fff;
+    color: #000;
+    transform: scale(1.1) translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.cart-floating-btn .cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #e74c3c;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #fff;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
+    }
+
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 10px rgba(231, 76, 60, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
+    }
+}
+
+#cartItems .remove-button {
+    background-color: #f44336;
+    /* Rojo para indicar acci??n destructiva */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 10px;
+    transition: background-color 0.2s ease;
+}
+
+#cartItems .remove-button:hover {
+    background-color: #d32f2f;
+    /* Oscurecer el rojo al pasar el cursor */
+    opacity: 0.9;
+}
+
+/* Premium Mega Menu Link Styles */
+.mega-link-premium {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #444 !important;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    padding: 4px 0;
+    display: inline-block;
+    position: relative;
+}
+
+.mega-link-premium:hover {
+    color: #000 !important;
+    transform: translateX(8px);
+    opacity: 1 !important;
+}
+
+/* Dynamic Navbar actions icons colors */
+.nav-actions .bx,
+.nav-actions .nav-cart-btn,
+.nav-actions .nav-icon-btn,
+.nav-actions .logout-btn,
+.nav-actions .nav-login-btn {
+    color: #000;
+    transition: color 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.navbar.not-at-home .nav-login-btn,
+.navbar.menu-open .nav-login-btn,
+.navbar:not(.at-immersive).scrolled .nav-login-btn {
+    border-color: rgba(0, 0, 0, 0.2) !important;
+    color: #000 !important;
+}
+
+/* Force white border for login button on immersive pages */
+.navbar.at-immersive:not(.menu-open) .nav-login-btn {
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    color: #fff !important;
+}
+
+/* Highlight Admin Button */
+.admin-btn {
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.admin-btn:hover {
+    transform: scale(1.05);
+    background: #333 !important;
+}
+
+/* 3D Carousel Styles - Compact Version */
+.carousel-3d-container {
+    perspective: 1000px;
+    height: 460px;
+    /* Increased height for better visibility */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.carousel-card-3d {
+    position: absolute;
+    width: 280px;
+    /* Increased width */
+    height: auto;
+    transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    z-index: 0;
+    transform: translateX(0) scale(0.8);
+    display: block;
+}
+
+.carousel-card-3d.active {
+    opacity: 1;
+    z-index: 10;
+    transform: translateX(0) scale(1) translateZ(0);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-card-3d.prev {
+    opacity: 0.7;
+    z-index: 5;
+    transform: translateX(-105%) scale(0.85) rotateY(15deg);
+    filter: blur(1px) brightness(0.95);
+    pointer-events: none;
+}
+
+.carousel-card-3d.next {
+    opacity: 0.7;
+    z-index: 5;
+    transform: translateX(105%) scale(0.85) rotateY(-15deg);
+    filter: blur(1px) brightness(0.95);
+    pointer-events: none;
+}
+
+.carousel-card-3d.hidden {
+    opacity: 0;
+    z-index: 0;
+    transform: scale(0.5);
+    pointer-events: none;
+    display: none;
+}

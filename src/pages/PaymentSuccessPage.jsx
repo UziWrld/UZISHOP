@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { paymentService } from '../services/paymentService';
-import { orderService } from '../services/orderService';
-import { formatCOP } from '../utils/formatters';
-import { useCart } from '../context/CartContext';
+import { paymentService } from '@checkout/services/paymentService';
+import { orderService } from '@checkout/services/orderService';
+import { formatCOP } from '@utils/formatters';
+import { useCart } from '@cart/context/CartContext';
 
 const PaymentSuccessPage = () => {
     const [searchParams] = useSearchParams();

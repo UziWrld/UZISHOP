@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useAuthController } from '../hooks/useAuthController';
-import { orderService } from '../services/orderService';
-import { formatCOP } from '../utils/formatters';
-import Footer from '../components/Footer';
-import '../assets/css/profile.css';
+import { useAuthController } from '@auth/hooks/useAuthController';
+import { orderService } from '@checkout/services/orderService';
+import { formatCOP } from '@utils/formatters';
+import Footer from '@core/components/layout/Footer';
+import '@assets/css/profile.css';
 
 const ProfilePage = () => {
     const { user, updateProfile } = useAuthController();

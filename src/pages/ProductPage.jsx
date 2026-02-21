@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { formatCOP } from '../utils/formatters';
+import { formatCOP } from '@utils/formatters';
 import { useParams, useNavigate } from 'react-router-dom';
 import { doc, getDoc, collection, query, where, getDocs, limit } from 'firebase/firestore';
-import { db } from '../firebase/config';
-import { useCart } from '../context/CartContext';
-import '../assets/css/product-page.css';
+import { db } from '@core/config/firebase';
+import { useCart } from '@cart/context/CartContext';
+import '@assets/css/product-page.css';
 
 
 const AccordionItem = ({ title, isOpen, onClick, children }) => {

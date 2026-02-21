@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import '../assets/css/stylelogin.css';
-import '../assets/css/responsivelogin.css';
-import { useAuthController } from '../hooks/useAuthController';
-import Footer from '../components/Footer';
-import Toast from '../components/Toast';
-import PasswordStrength from '../components/PasswordStrength';
+import '@assets/css/stylelogin.css';
+import '@assets/css/responsivelogin.css';
+import { useAuthController } from '@auth/hooks/useAuthController';
+import Footer from '@core/components/layout/Footer';
+import Toast from '@components/Toast';
+import PasswordStrength from '@auth/components/PasswordStrength';
 
 const AuthPage = () => {
     const [isActive, setIsActive] = useState(false); // false = sign-in, true = sign-up

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCollections } from '../hooks/useCollections';
+import { useCollections } from '@products/hooks/useCollections';
 
 const CollectionCard = ({ collection, index }) => {
     const navigate = useNavigate();

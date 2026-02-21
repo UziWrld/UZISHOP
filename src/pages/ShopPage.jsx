@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import ProductCard from '../components/ProductCard';
-import ProductDetailsModal from '../components/ProductDetailsModal';
-import { useCart } from '../context/CartContext';
-import { useProducts } from '../hooks/useProducts';
-import { useCollectionData } from '../hooks/useCollectionData';
+import ProductCard from '@products/components/ProductCard';
+import ProductDetailsModal from '@products/components/ProductDetailsModal';
+import { useCart } from '@cart/context/CartContext';
+import { useProducts } from '@products/hooks/useProducts';
+import { useCollectionData } from '@products/hooks/useCollectionData';
 
 const ShopPage = () => {
     const { addToCart } = useCart();

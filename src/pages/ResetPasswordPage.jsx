@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { useAuthController } from '../hooks/useAuthController';
-import Toast from '../components/Toast';
-import Footer from '../components/Footer';
-import PasswordStrength from '../components/PasswordStrength';
-import '../assets/css/stylelogin.css';
+import { useAuthController } from '@auth/hooks/useAuthController';
+import Toast from '@components/Toast';
+import Footer from '@core/components/layout/Footer';
+import PasswordStrength from '@auth/components/PasswordStrength';
+import '@assets/css/stylelogin.css';
 
 const ResetPasswordPage = () => {
     const [searchParams] = useSearchParams();

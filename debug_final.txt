@@ -1,0 +1,36 @@
+﻿
+Running 1 test using 1 worker
+
+  Ô£ÿ  1 [chromium] ÔÇ║ tests\e2e\checkout.spec.js:4:5 ÔÇ║ Checkout Flow ÔÇ║ should redirect to login when unauthenticated (22.6s)
+
+
+  1) [chromium] ÔÇ║ tests\e2e\checkout.spec.js:4:5 ÔÇ║ Checkout Flow ÔÇ║ should redirect to login when unauthenticated 
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveURL[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Expected pattern: [32m/.*login/[39m
+    Received string:  [31m"http://localhost:5173/checkout"[39m
+    Timeout: 20000ms
+
+    Call log:
+    [2m  - Expect "toHaveURL" with timeout 20000ms[22m
+    [2m    23 ├ù unexpected value "http://localhost:5173/checkout"[22m
+
+
+       8 |         // PrivateRoute debe redirigir a /login
+       9 |         // Aumentamos el timeout para compensar la inicializaci├│n en fr├¡o
+    > 10 |         await expect(page).toHaveURL(/.*login/, { timeout: 20000 });
+         |                            ^
+      11 |
+      12 |         // Verificar que el formulario de login est├® presente
+      13 |         const loginContainer = page.locator('.auth-page-wrapper-outer');
+        at C:\xampp\htdocs\UZISHOP\tests\e2e\checkout.spec.js:10:28
+
+    attachment #1: screenshot (image/png) ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    test-results\checkout-Checkout-Flow-sho-883d7--login-when-unauthenticated-chromium\test-failed-1.png
+    ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+    Error Context: test-results\checkout-Checkout-Flow-sho-883d7--login-when-unauthenticated-chromium\error-context.md
+
+  1 failed
+    [chromium] ÔÇ║ tests\e2e\checkout.spec.js:4:5 ÔÇ║ Checkout Flow ÔÇ║ should redirect to login when unauthenticated 

@@ -1,0 +1,18 @@
+﻿
+Running 1 test using 1 worker
+
+Navigating to /checkout...
+[BROWSER LOG] [vite] connecting...
+[BROWSER LOG] [vite] connected.
+[HTTP ERROR 500] http://localhost:5173/src/core/components/layout/Footer.jsx
+[BROWSER LOG] Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[REQUEST FAILED] http://localhost:5173/src/core/components/layout/Footer.jsx - net::ERR_ABORTED
+[HTTP ERROR 500] http://localhost:5173/src/core/components/layout/Navbar.jsx
+[BROWSER LOG] Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[REQUEST FAILED] http://localhost:5173/src/core/components/layout/Navbar.jsx - net::ERR_ABORTED
+Main document standing: [33m200[39m
+Final URL: http://localhost:5173/checkout
+Is "INITIALIZING" visible? [33mfalse[39m
+  Ô£ô  1 [chromium] ÔÇ║ tests\e2e\checkout.spec.js:4:5 ÔÇ║ Network Diagnostic ÔÇ║ should track all network requests (6.5s)
+
+  1 passed (13.8s)

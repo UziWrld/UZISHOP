@@ -1,0 +1,91 @@
+﻿
+> react-app@0.0.0 build
+> vite build
+
+[36mvite v7.3.1 [32mbuilding client environment for production...[36m[39m
+transforming...
+node.exe : [33m[vit
+e:css][postcss] 
+@import must 
+precede all other 
+statements (besides 
+@charset or empty 
+@layer)
+En línea: 1 
+Carácter: 1
++ & "C:\Program File
+s\nodejs/node.exe" 
+"C:\Program Files\no
+dejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+    + CategoryInfo  
+            : NotS  
+  pecified: ([33   
+ m[vite:css]...r    
+ empty @layer):    
+String) [], Rem    
+oteException
+    + FullyQualifie 
+   dErrorId : Nati  
+  veCommandError
+ 
+121 |  }
+122 |  
+123 |  @import url('
+https://fonts.google
+apis.com/css2?family
+=Inter:ital,opsz,wgh
+t@0,14..32,100..900;
+1,14..32,100..900&di
+spla...
+    |  ^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+124 |  
+125 |  * {[39m
+[32mÔ£ô[39m 53 modules transformed.
+[31mÔ£ù[39m Build 
+failed in 1.05s
+[31merror during 
+build:
+[31mCould not 
+resolve "../componen
+ts/admin/AdminDashbo
+ard" from "src/pages
+/AdminPage.jsx"[31m
+file: [36mC:/xampp/
+htdocs/UZISHOP/src/p
+ages/AdminPage.jsx[
+31m
+    at 
+getRollupError (file
+:///C:/xampp/htdocs/
+UZISHOP/node_modules
+/rollup/dist/es/shar
+ed/parseAst.js:401:4
+1)
+    at error (file:/
+//C:/xampp/htdocs/UZ
+ISHOP/node_modules/r
+ollup/dist/es/shared
+/parseAst.js:397:42)
+    at ModuleLoader.
+handleInvalidResolve
+dId (file:///C:/xamp
+p/htdocs/UZISHOP/nod
+e_modules/rollup/dis
+t/es/shared/node-ent
+ry.js:21706:24)
+    at file:///C:/xa
+mpp/htdocs/UZISHOP/n
+ode_modules/rollup/d
+ist/es/shared/node-e
+ntry.js:21666:26[39
+m

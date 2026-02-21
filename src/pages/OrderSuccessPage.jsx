@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, Link, Navigate } from 'react-router-dom';
-import Footer from '../components/Footer';
+import Footer from '@core/components/layout/Footer';
 
 const OrderSuccessPage = () => {
     const location = useLocation();

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import HeroVideo from '../components/HeroVideo';
-import Marquee from '../components/home/Marquee';
-import FeaturedCollections from '../components/home/FeaturedCollections';
-import NewArrivals from '../components/home/NewArrivals';
-import BrandStory from '../components/home/BrandStory';
+import HeroVideo from '@core/components/HeroVideo';
+import Marquee from '@products/components/home/Marquee';
+import FeaturedCollections from '@products/components/home/FeaturedCollections';
+import NewArrivals from '@products/components/home/NewArrivals';
+import BrandStory from '@products/components/home/BrandStory';
 
 const HomePage = () => {
     // Scroll to top on mount

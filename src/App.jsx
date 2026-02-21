@@ -1,34 +1,35 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Cart from './components/Cart';
-import Footer from './components/Footer';
+import Navbar from '@components/layout/Navbar.jsx';
+import Cart from '@cart/components/Cart';
+import Footer from '@components/layout/Footer.jsx';
+import ScrollToTop from '@components/ScrollToTop.jsx';
 
 // Pages
-const HomePage = lazy(() => import('./pages/HomePage'));
-const ProductPage = lazy(() => import('./pages/ProductPage'));
-const AdminPage = lazy(() => import('./pages/AdminPage'));
-const AuthPage = lazy(() => import('./pages/AuthPage'));
-const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'));
-const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
-const ProfilePage = lazy(() => import('./pages/ProfilePage'));
-const ShopPage = lazy(() => import('./pages/ShopPage'));
-const OrderSuccessPage = lazy(() => import('./pages/OrderSuccessPage'));
-const PaymentSuccessPage = lazy(() => import('./pages/PaymentSuccessPage'));
-const CollectionsPage = lazy(() => import('./pages/CollectionsPage'));
+const HomePage = lazy(() => import('@pages/HomePage.jsx'));
+const ProductPage = lazy(() => import('@pages/ProductPage.jsx'));
+const AdminPage = lazy(() => import('@pages/AdminPage.jsx'));
+const AuthPage = lazy(() => import('@pages/AuthPage.jsx'));
+const ResetPasswordPage = lazy(() => import('@pages/ResetPasswordPage.jsx'));
+const CheckoutPage = lazy(() => import('@pages/CheckoutPage.jsx'));
+const ProfilePage = lazy(() => import('@pages/ProfilePage.jsx'));
+const ShopPage = lazy(() => import('@pages/ShopPage.jsx'));
+const OrderSuccessPage = lazy(() => import('@pages/OrderSuccessPage.jsx'));
+const PaymentSuccessPage = lazy(() => import('@pages/PaymentSuccessPage.jsx'));
+const CollectionsPage = lazy(() => import('@pages/CollectionsPage.jsx'));
 
-import { useAuthController } from './hooks/useAuthController';
-import { CartProvider, useCart } from './context/CartContext';
-import { formatCOP } from './utils/formatters';
-import './assets/css/style.css';
-import './assets/css/responsive.css';
-import './assets/css/cart-premium.css';
-import './assets/css/checkout.css';
-import './assets/css/mobile.css';
+import { useAuthController } from '@auth/hooks/useAuthController.js';
+import { CartProvider, useCart } from '@cart/context/CartContext.jsx';
+import { formatCOP } from '@utils/formatters.js';
+import '@core/assets/css/style.css';
+import '@core/assets/css/responsive.css';
+import '@core/assets/css/cart-premium.css';
+import '@core/assets/css/checkout.css';
+import '@core/assets/css/mobile.css';
 
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const NotFoundPage = lazy(() => import('@pages/NotFoundPage.jsx'));
 import { Navigate } from 'react-router-dom';
-import LoadingScreen from './components/common/LoadingScreen';
+import LoadingScreen from '@components/common/LoadingScreen.jsx';
 
 // Guard para rutas de Administrador
 const AdminRoute = ({ children, user, loading }) => {
@@ -105,35 +106,37 @@ const AppContent = () => {
       />
 
       <div className={isAdminRoute ? 'admin-dashboard-wrapper' : (isAuthRoute ? 'auth-page-wrapper-outer' : 'main-content')}>
-        <Suspense fallback={<LoadingScreen />}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/shop" element={<ShopPage />} />
-            <Route path="/collections" element={<CollectionsPage />} />
-            <Route path="/product/:id" element={<ProductPage />} />
-            <Route path="/admin/*" element={
-              <AdminRoute user={user} loading={authLoading}>
-                <AdminPage />
-              </AdminRoute>
-            } />
-            <Route path="/login" element={<AuthPage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
-            <Route path="/checkout" element={
-              <PrivateRoute user={user} loading={authLoading}>
-                <CheckoutPage />
-              </PrivateRoute>
-            } />
-            <Route path="/profile" element={
-              <PrivateRoute user={user} loading={authLoading}>
-                <ProfilePage />
-              </PrivateRoute>
-            } />
-            <Route path="/order-success" element={<OrderSuccessPage />} />
-            <Route path="/payment-success" element={<PaymentSuccessPage />} />
-            {/* Catch-all route for 404 */}
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingScreen />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/shop" element={<ShopPage />} />
+              <Route path="/collections" element={<CollectionsPage />} />
+              <Route path="/product/:id" element={<ProductPage />} />
+              <Route path="/admin/*" element={
+                <AdminRoute user={user} loading={authLoading}>
+                  <AdminPage />
+                </AdminRoute>
+              } />
+              <Route path="/login" element={<AuthPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
+              <Route path="/checkout" element={
+                <PrivateRoute user={user} loading={authLoading}>
+                  <CheckoutPage />
+                </PrivateRoute>
+              } />
+              <Route path="/profile" element={
+                <PrivateRoute user={user} loading={authLoading}>
+                  <ProfilePage />
+                </PrivateRoute>
+              } />
+              <Route path="/order-success" element={<OrderSuccessPage />} />
+              <Route path="/payment-success" element={<PaymentSuccessPage />} />
+              {/* Catch-all route for 404 */}
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
       </div>
 
       <Cart
@@ -146,15 +149,17 @@ const AppContent = () => {
   );
 };
 
-import ScrollToTop from './components/ScrollToTop';
+import ErrorBoundary from '@core/components/ErrorBoundary.jsx';
 
 function App() {
   return (
     <Router>
       <ScrollToTop />
-      <CartProvider>
-        <AppContent />
-      </CartProvider>
+      <ErrorBoundary>
+        <CartProvider>
+          <AppContent />
+        </CartProvider>
+      </ErrorBoundary>
     </Router>
   );
 }

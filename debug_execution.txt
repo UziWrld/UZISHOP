@@ -1,0 +1,19 @@
+﻿
+Running 1 test using 1 worker
+
+Navigating to /checkout...
+[BROWSER LOG] Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[BROWSER LOG] Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[BROWSER LOG] [vite] connecting...
+[BROWSER LOG] [vite] connected.
+URL at networkidle: http://localhost:5173/checkout
+DEBUG STATE FROM BROWSER: [90mundefined[39m
+URL after 5s: http://localhost:5173/checkout
+FAILED: Still on checkout.
+[BROWSER LOG] [vite] connecting...
+[BROWSER LOG] [vite] connected.
+[BROWSER LOG] Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[BROWSER LOG] Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  Ô£ô  1 [chromium] ÔÇ║ tests\e2e\checkout.spec.js:4:5 ÔÇ║ Checkout Flow ÔÇ║ should handle initial navigation to checkout (6.8s)
+
+  1 passed (13.2s)

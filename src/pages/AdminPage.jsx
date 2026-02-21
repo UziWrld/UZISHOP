@@ -1,6 +1,6 @@
 import React from 'react';
-import AdminDashboard from '../components/admin/AdminDashboard';
-import { useAuthController } from '../hooks/useAuthController';
+import AdminDashboard from '@admin/components/AdminDashboard';
+import { useAuthController } from '@auth/hooks/useAuthController';
 import { Navigate } from 'react-router-dom';
 
 const AdminPage = () => {
