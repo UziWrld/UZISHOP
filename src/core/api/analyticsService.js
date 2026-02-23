@@ -1,6 +1,8 @@
 import { db } from "@core/config/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { createLogger } from "@core/utils/Logger";
 
+const logger = createLogger('analyticsService');
 const ORDERS_COLLECTION = "orders";
 
 export const analyticsService = {
@@ -33,7 +35,7 @@ export const analyticsService = {
 
             return revenue;
         } catch (error) {
-            console.error(`[analyticsService] Error getting total revenue from COLLECTION ${ORDERS_COLLECTION}:`, error);
+            logger.error('Analytics error', error);
             return 0;
         }
     },
@@ -77,7 +79,7 @@ export const analyticsService = {
 
             return topProducts;
         } catch (error) {
-            console.error(`[analyticsService] Error getting top selling products from COLLECTION ${ORDERS_COLLECTION}:`, error);
+            logger.error('Error getting top selling products', error);
             return [];
         }
     },
@@ -129,7 +131,7 @@ export const analyticsService = {
                 new Date(a.date) - new Date(b.date)
             );
         } catch (error) {
-            console.error("Error getting sales by date:", error);
+            logger.error('Error getting sales by date', error);
             return [];
         }
     },
@@ -170,7 +172,7 @@ export const analyticsService = {
 
             return stats;
         } catch (error) {
-            console.error(`[analyticsService] Error getting order stats from COLLECTION ${ORDERS_COLLECTION}:`, error);
+            logger.error('Error getting order stats', error);
             return {
                 total: 0,
                 enPreparacion: 0,
@@ -229,7 +231,7 @@ export const analyticsService = {
                 monthOrders: monthOrders.length
             };
         } catch (error) {
-            console.error("Error getting business metrics:", error);
+            logger.error('Error getting business metrics', error);
             return {
                 totalRevenue: 0,
                 totalOrders: 0,
@@ -273,7 +275,7 @@ export const analyticsService = {
                 leastInterest
             };
         } catch (error) {
-            console.error("Error getting product performance stats:", error);
+            logger.error('Error getting product performance stats', error);
             return { mostViewed: [], mostSold: [], leastInterest: [] };
         }
     }

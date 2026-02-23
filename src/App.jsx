@@ -20,7 +20,7 @@ const CollectionsPage = lazy(() => import('@pages/CollectionsPage.jsx'));
 
 import { useAuthController } from '@auth/hooks/useAuthController.js';
 import { CartProvider, useCart } from '@cart/context/CartContext.jsx';
-import { formatCOP } from '@utils/formatters.js';
+import { LoadingProvider } from '@core/context/LoadingContext.jsx';
 import '@core/assets/css/style.css';
 import '@core/assets/css/responsive.css';
 import '@core/assets/css/cart-premium.css';
@@ -156,9 +156,11 @@ function App() {
     <Router>
       <ScrollToTop />
       <ErrorBoundary>
-        <CartProvider>
-          <AppContent />
-        </CartProvider>
+        <LoadingProvider>
+          <CartProvider>
+            <AppContent />
+          </CartProvider>
+        </LoadingProvider>
       </ErrorBoundary>
     </Router>
   );

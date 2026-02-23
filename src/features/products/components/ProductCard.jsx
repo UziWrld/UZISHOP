@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { formatCOP } from '@utils/formatters.js';
 
-const ProductCard = ({ product, onAddToCart, onCardClick }) => {
+/**
+ * ProductCard — memoizado para evitar re-renders cuando el padre cambia
+ * pero las props del producto no cambian.
+ */
+const ProductCard = memo(({ product, onAddToCart, onCardClick }) => {
     const [isHovered, setIsHovered] = useState(false);
 
-    // Fallback logic for images
     const hasMultipleImages = product.images && product.images.length > 1;
     const firstImage = (product.images && product.images.length > 0) ? product.images[0] : product.image;
     const secondImage = hasMultipleImages ? product.images[1] : firstImage;
-
-    // Current image to display based on hover state
     const displayImage = (isHovered && hasMultipleImages) ? secondImage : firstImage;
 
     const isSoldOut = product.stock === 0;
@@ -44,7 +45,6 @@ const ProductCard = ({ product, onAddToCart, onCardClick }) => {
                         }}
                     />
                 </div>
-
 
                 {!isSoldOut && (
                     <button
@@ -91,6 +91,8 @@ const ProductCard = ({ product, onAddToCart, onCardClick }) => {
             )}
         </div>
     );
-};
+});
+
+ProductCard.displayName = 'ProductCard';
 
 export default ProductCard;

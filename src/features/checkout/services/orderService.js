@@ -1,8 +1,21 @@
 import { db } from "@core/config/firebase";
 import { collection, query, where, getDocs, doc, runTransaction, onSnapshot, updateDoc } from "firebase/firestore";
+import { createLogger } from "@core/utils/Logger";
 
+const logger = createLogger('orderService');
 const COLLECTION_NAME = "orders";
 const PRODUCTS_COLLECTION = "products";
+
+/** Mapea el método de pago al estado inicial de la orden */
+const resolvePaymentStatus = (paymentMethod) => {
+    const map = {
+        cod: 'pending_cash',
+        bank_transfer: 'pending_transfer',
+        mercadopago: 'pending_gateway',
+        wompi: 'pending_gateway',
+    };
+    return map[paymentMethod] || 'pending_verification';
+};
 
 const generateOrderNumber = () => {
     const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
@@ -90,20 +103,22 @@ export const orderService = {
                     }
                 }
 
-                // 3. Crear el documento del pedido
+                // 3. Crear el documento del pedido con paymentStatus explícito
                 transaction.set(orderRef, {
                     ...orderData.toFirestore(),
                     orderNumber,
                     status: 'en preparacion',
+                    paymentStatus: resolvePaymentStatus(orderData.paymentMethod),
                     trackingNumber: '',
                     createdAt: new Date()
                 });
             });
 
+            logger.info(`Orden creada: ${orderNumber}`);
             return { id: orderRef.id, orderNumber };
         } catch (error) {
-            console.error("Error in createOrder transaction:", error);
-            throw error; // El componente CheckoutPage manejará este error y lo mostrará al usuario
+            logger.error('Error en transacción de createOrder', error);
+            throw error;
         }
     },
 
@@ -123,7 +138,7 @@ export const orderService = {
             // Ordenar por fecha descending en el cliente para evitar requerir un índice compuesto en Firestore
             return orders.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
         } catch (error) {
-            console.error(`[orderService] Error getting orders for user ${userId} from COLLECTION ${COLLECTION_NAME}:`, error);
+            logger.error(`Error obteniendo órdenes del usuario ${userId}`, error);
             throw error;
         }
     },
@@ -139,7 +154,7 @@ export const orderService = {
 
             return orders.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
         } catch (error) {
-            console.error(`[orderService] Error getting ALL orders (ADMIN) from COLLECTION ${COLLECTION_NAME}:`, error);
+            logger.error('Error obteniendo todas las órdenes (Admin)', error);
             throw error;
         }
     },
@@ -160,7 +175,7 @@ export const orderService = {
 
             callback(sortedOrders);
         }, (error) => {
-            console.error("Error in orders subscription:", error);
+            logger.error('Error en suscripción de órdenes', error);
         });
     },
 
@@ -207,7 +222,7 @@ export const orderService = {
 
             return { success: true };
         } catch (error) {
-            console.error("Error updating order status:", error);
+            logger.error('Error actualizando estado de orden', error);
             throw error;
         }
     },
@@ -225,7 +240,7 @@ export const orderService = {
             });
             return { success: true };
         } catch (error) {
-            console.error("Error adding tracking info:", error);
+            logger.error('Error añadiendo tracking', error);
             throw error;
         }
     }

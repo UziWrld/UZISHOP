@@ -1,6 +1,8 @@
 import { db } from "@core/config/firebase";
 import { collection, addDoc, doc, updateDoc, getDoc } from "firebase/firestore";
+import { createLogger } from "@core/utils/Logger";
 
+const logger = createLogger('paymentService');
 const WOMPI_PUBLIC_KEY = import.meta.env.VITE_WOMPI_PUBLIC_KEY || 'pub_test_your_key_here';
 const WOMPI_API_URL = 'https://production.wompi.co/v1';
 
@@ -42,8 +44,8 @@ export const paymentService = {
                 reference: reference
             };
         } catch (error) {
-            console.error("Error creating payment intent:", error);
-            throw new Error("No se pudo crear la intención de pago");
+            logger.error('Error creando intención de pago', error);
+            throw new Error('No se pudo crear la intención de pago');
         }
     },
 
@@ -75,8 +77,8 @@ export const paymentService = {
                 amount: data.data.amount_in_cents / 100
             };
         } catch (error) {
-            console.error("Error verifying payment:", error);
-            throw new Error("No se pudo verificar el estado del pago");
+            logger.error('Error verificando pago', error);
+            throw new Error('No se pudo verificar el estado del pago');
         }
     },
 
@@ -99,7 +101,7 @@ export const paymentService = {
                     : 'Pedido confirmado. Te enviaremos los datos para transferencia por email.'
             };
         } catch (error) {
-            console.error("Error processing alternative payment:", error);
+            logger.error('Error procesando pago alternativo', error);
             throw error;
         }
     },
@@ -129,7 +131,7 @@ export const paymentService = {
             await updateDoc(orderRef, updateData);
             return { success: true };
         } catch (error) {
-            console.error("Error updating payment status:", error);
+            logger.error('Error actualizando estado de pago en orden', error);
             throw error;
         }
     }

@@ -1,112 +1,72 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useCart } from '@cart/context/CartContext';
 import { useAuthController } from '@auth/hooks/useAuthController';
 import { orderService } from '@checkout/services/orderService';
-import { couponService } from '@checkout/services/couponService';
 import { emailService } from '@checkout/services/emailService';
 import { abandonedCartService } from '@checkout/services/abandonedCartService';
 import { Order } from '@checkout/models/Order';
-import { Coupon } from '@checkout/models/Coupon';
+import { createLogger } from '@core/utils/Logger';
+import { useOrderForm } from './useOrderForm';
+import { useShipping } from './useShipping';
+import { useCoupon } from './useCoupon';
+import { useAbandonedCart } from './useAbandonedCart';
+
+const logger = createLogger('useCheckoutController');
 
 /**
- * useCheckoutController Hook
- * Manages the complex state and operations of the Checkout process.
+ * useCheckoutController
+ * Orchestrator: delega cada responsabilidad a hooks especializados.
+ * Mantiene solo la lógica de orquestación y el flujo de submitOrder.
  */
 export const useCheckoutController = () => {
     const { cart, totalAmount, clearCart } = useCart();
-    const { user, updateProfile } = useAuthController();
-
-    const [couponCode, setCouponCode] = useState('');
-    const [couponData, setCouponData] = useState(null);
-    const [discountAmount, setDiscountAmount] = useState(0);
-
-    const [formData, setFormData] = useState({
-        email: user?.email || '',
-        newsletter: true,
-        firstName: user?.nombre || '',
-        lastName: user?.apellidos || '',
-        cedula: user?.cedula || '',
-        address: user?.address || '',
-        details: user?.details || '',
-        city: user?.city || '',
-        postalCode: user?.postalCode || '',
-        phone: user?.phone || '',
-        billingSame: true
-    });
-
-    const [paymentMethod, setPaymentMethod] = useState('mercadopago');
-    const [shippingMethod, setShippingMethod] = useState('standard');
+    const { user, updateProfile, isAuthenticated } = useAuthController();
     const [loading, setLoading] = useState(false);
 
-    const isAMB = ["Bucaramanga", "Floridablanca", "Girón", "Piedecuesta"].includes(formData.city);
+    // --- Hooks especializados ---
+    const { formData, handleChange } = useOrderForm(user);
 
-    // Shipping Calculation logic
-    const shippingCost = shippingMethod === 'cod'
-        ? (totalAmount >= 200000 ? 0 : 5000)
-        : (totalAmount >= 200000 ? 0 : 15000);
+    const {
+        shippingMethod, setShippingMethod,
+        paymentMethod, setPaymentMethod,
+        shippingCost, isAMB
+    } = useShipping(formData.city, totalAmount);
 
-    const finalTotal = totalAmount + shippingCost - discountAmount;
+    const finalTotal = useMemo(
+        () => totalAmount + shippingCost - (discountAmount || 0),
+        [totalAmount, shippingCost]
+    );
 
-    // Handle form changes
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
-    };
+    const {
+        couponCode, setCouponCode,
+        couponData, discountAmount,
+        applyCoupon
+    } = useCoupon(totalAmount, user?.uid);
 
-    // Apply Coupon
-    const applyCoupon = async (code) => {
-        try {
-            const data = await couponService.validateCoupon(code, totalAmount, user?.uid);
-            const model = new Coupon(data);
-            setCouponData(model);
-            setDiscountAmount(model.calculateDiscount(totalAmount));
-            return { success: true, message: `Cupón ${model.code} aplicado` };
-        } catch (error) {
-            setCouponData(null);
-            setDiscountAmount(0);
-            return { success: false, message: error.message };
-        }
-    };
+    // Sincronizar carrito abandonado (debounced)
+    useAbandonedCart({
+        user,
+        cart,
+        email: formData.email,
+        finalTotal: totalAmount + shippingCost - (discountAmount || 0)
+    });
 
-    // Sync shipping and payment based on city
-    useEffect(() => {
-        if (!isAMB && shippingMethod === 'cod') {
-            setShippingMethod('standard');
-            setPaymentMethod('mercadopago');
-        } else if (shippingMethod === 'cod') {
-            setPaymentMethod('cod');
-        } else if (shippingMethod === 'standard' && paymentMethod === 'cod') {
-            setPaymentMethod('mercadopago');
-        }
-    }, [formData.city, isAMB, shippingMethod]);
-
-    // Abandoned Cart Sync (Debounced)
-    useEffect(() => {
-        if (!formData.email || cart.length === 0 || !user) return;
-
-        const saveCart = async () => {
-            try {
-                await abandonedCartService.saveAbandonedCart(
-                    user.uid,
-                    cart,
-                    formData.email,
-                    finalTotal
-                );
-            } catch (error) {
-                console.error('Error saving abandoned cart:', error);
-            }
-        };
-
-        const timeoutId = setTimeout(saveCart, 2000);
-        return () => clearTimeout(timeoutId);
-    }, [formData.email, cart, user, finalTotal]);
-
-    // Submit Order
+    // --- Orquestador principal del pedido ---
     const submitOrder = async () => {
+        // Validación de autenticación ANTES de intentar escribir en Firestore
+        if (!isAuthenticated) {
+            return {
+                success: false,
+                message: 'Debes iniciar sesión para completar tu pedido.'
+            };
+        }
+
         setLoading(true);
         try {
+            const computedTotal = totalAmount + shippingCost - (discountAmount || 0);
+
             const orderModel = new Order({
-                userId: user?.uid || 'guest',
+                userId: user.uid,
                 customerEmail: formData.email,
                 customerName: `${formData.firstName} ${formData.lastName}`.trim(),
                 cedula: formData.cedula,
@@ -117,45 +77,45 @@ export const useCheckoutController = () => {
                 },
                 items: cart,
                 subtotal: totalAmount,
-                discount: discountAmount,
+                discount: discountAmount || 0,
                 couponCode: couponData?.code || '',
-                total: finalTotal,
+                total: computedTotal,
                 paymentMethod,
                 newsletter: formData.newsletter
             });
 
             if (!orderModel.isValidForCheckout()) {
-                throw new Error("Por favor completa todos los campos requeridos.");
+                throw new Error('Por favor completa todos los campos requeridos.');
             }
 
             const result = await orderService.createOrder(orderModel);
+            logger.info(`Pedido creado: ${result.orderNumber}`);
 
-            // Side effects: Emails (fire and forget)
-            try {
-                await emailService.sendOrderConfirmation({ ...orderModel, orderNumber: result.orderNumber }, formData.email);
-            } catch (e) { console.error("Email error:", e); }
+            // Side effects: fire and forget (no bloquean el flujo principal)
+            emailService
+                .sendOrderConfirmation({ ...orderModel, orderNumber: result.orderNumber }, formData.email)
+                .catch(e => logger.warn('Error enviando email de confirmación', e));
 
-            // Profile Update
-            if (user) {
-                await updateProfile({
-                    nombre: formData.firstName,
-                    apellidos: formData.lastName,
-                    cedula: formData.cedula,
-                    address: formData.address,
-                    details: formData.details,
-                    city: formData.city,
-                    postalCode: formData.postalCode,
-                    phone: formData.phone
-                });
-            }
+            // Actualizar perfil con datos del formulario
+            await updateProfile({
+                nombre: formData.firstName,
+                apellidos: formData.lastName,
+                cedula: formData.cedula,
+                address: formData.address,
+                details: formData.details,
+                city: formData.city,
+                postalCode: formData.postalCode,
+                phone: formData.phone
+            });
 
             // Cleanup
-            if (user) await abandonedCartService.markCartAsRecovered(user.uid);
+            abandonedCartService.markCartAsRecovered(user.uid)
+                .catch(e => logger.warn('Error marcando carrito recuperado', e));
             clearCart();
 
             return { success: true, orderNumber: result.orderNumber };
         } catch (error) {
-            console.error("Checkout error:", error);
+            logger.error('Error en submitOrder', error);
             return { success: false, message: error.message };
         } finally {
             setLoading(false);
@@ -171,9 +131,9 @@ export const useCheckoutController = () => {
         setPaymentMethod,
         loading,
         totalAmount,
-        discountAmount,
+        discountAmount: discountAmount || 0,
         shippingCost,
-        finalTotal,
+        finalTotal: totalAmount + shippingCost - (discountAmount || 0),
         couponCode,
         setCouponCode,
         applyCoupon,

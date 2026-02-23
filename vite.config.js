@@ -22,7 +22,8 @@ export default defineConfig({
       '@cart': path.resolve(__dirname, './src/features/cart'),
       '@checkout': path.resolve(__dirname, './src/features/checkout'),
       '@admin': path.resolve(__dirname, './src/features/admin'),
-      '@services': path.resolve(__dirname, './src/features/products/services'), // Redirigido a products por defecto o eliminar si no se usa globalmente
+      // @productServices: alias específico de features/products para uso interno del feature
+      '@productServices': path.resolve(__dirname, './src/features/products/services'),
       '@pages': path.resolve(__dirname, './src/pages'),
     }
   },

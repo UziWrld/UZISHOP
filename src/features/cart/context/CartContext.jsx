@@ -1,6 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { CartItem } from '@cart/models/CartItem.js';
+import { createLogger } from '@core/utils/Logger';
 
+const logger = createLogger('CartContext');
 const CartContext = createContext();
 
 export const useCart = () => {
@@ -8,18 +10,18 @@ export const useCart = () => {
 };
 
 export const CartProvider = ({ children }) => {
-    // Cargar carrito desde localStorage al iniciar (Lazy Initialization)
+    // Carga lazy desde localStorage al iniciar
     const [cart, setCart] = useState(() => {
         try {
             const savedCart = localStorage.getItem('uzishop_cart');
             return savedCart ? JSON.parse(savedCart) : [];
         } catch (e) {
-            console.error("Error parsing cart from localStorage", e);
+            logger.warn('Error al leer carrito desde localStorage', e);
             return [];
         }
     });
 
-    // Guardar carrito en localStorage cuando cambie
+    // Persistir carrito en localStorage al cambiar
     useEffect(() => {
         localStorage.setItem('uzishop_cart', JSON.stringify(cart));
     }, [cart]);
@@ -33,45 +35,50 @@ export const CartProvider = ({ children }) => {
             );
 
             if (existingIndex !== -1) {
-                const newCart = [...currentCart];
-                newCart[existingIndex] = {
-                    ...newCart[existingIndex],
-                    quantity: (newCart[existingIndex].quantity || 1) + product.quantity
-                };
-                return newCart;
-            } else {
-                return [...currentCart, product];
+                return currentCart.map((item, idx) =>
+                    idx === existingIndex
+                        ? { ...item, quantity: (item.quantity || 1) + product.quantity }
+                        : item
+                );
             }
+            return [...currentCart, product];
         });
     };
 
     const removeFromCart = (index) => {
-        setCart(prevCart => {
-            const newCart = [...prevCart];
-            newCart.splice(index, 1);
-            return newCart;
-        });
+        setCart(prevCart => prevCart.filter((_, idx) => idx !== index));
     };
 
+    /**
+     * CORREGIDO: Eliminada la mutación directa `item.quantity = newQty`.
+     * Ahora se usa map() para producir un nuevo array inmutable.
+     */
     const updateQuantity = (index, delta) => {
         setCart(prevCart => {
-            const newCart = [...prevCart];
-            const item = newCart[index];
-            const newQty = (item.quantity || 1) + delta;
-
-            if (newQty > 0) {
-                item.quantity = newQty;
-            } else {
-                newCart.splice(index, 1);
-            }
-            return newCart;
+            return prevCart.reduce((acc, item, idx) => {
+                if (idx !== index) return [...acc, item];
+                const newQty = (item.quantity || 1) + delta;
+                if (newQty > 0) return [...acc, { ...item, quantity: newQty }];
+                return acc; // Si qty <= 0, el item se elimina
+            }, []);
         });
     };
 
     const clearCart = () => setCart([]);
 
-    const totalAmount = cart.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0);
-    const cartCount = cart.reduce((acc, item) => acc + (item.quantity || 1), 0);
+    /**
+     * CORREGIDO: useMemo para evitar recálculos en cada render.
+     * Antes se calculaban en cada renderizado del Provider.
+     */
+    const totalAmount = useMemo(
+        () => cart.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0),
+        [cart]
+    );
+
+    const cartCount = useMemo(
+        () => cart.reduce((acc, item) => acc + (item.quantity || 1), 0),
+        [cart]
+    );
 
     const value = {
         cart,

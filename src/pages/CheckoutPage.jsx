@@ -39,7 +39,6 @@ const CheckoutPage = () => {
         isAMB
     } = useCheckoutController();
 
-    const taxAmount = totalAmount * 0.16;
 
     useEffect(() => {
         if (cart.length === 0) {
