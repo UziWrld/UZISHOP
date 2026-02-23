@@ -40,6 +40,7 @@
     width: 480px;
     height: 100%;
     background: #fff;
+    color: #000;
     box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
@@ -179,11 +180,13 @@
     font-weight: 800;
     font-size: 0.95rem;
     text-transform: uppercase;
+    color: #000;
 }
 
 .item-price-text {
     font-weight: 600;
     font-size: 0.9rem;
+    color: #000;
 }
 
 .item-variant-text {
@@ -219,6 +222,7 @@
     font-weight: 700;
     padding: 0 5px;
     font-size: 0.9rem;
+    color: #000;
 }
 
 .quitar-link {
@@ -247,6 +251,7 @@
     letter-spacing: 2px;
     margin-bottom: 20px;
     text-align: center;
+    color: #000;
 }
 
 .upsell-grid {
@@ -292,6 +297,7 @@
     margin-bottom: 25px;
     font-weight: 900;
     font-size: 1.1rem;
+    color: #000;
 }
 
 .finalizar-btn {
@@ -315,6 +321,7 @@
 .empty-cart-view {
     padding: 100px 0;
     text-align: center;
+    color: #000;
 }
 
 .continue-shopping {

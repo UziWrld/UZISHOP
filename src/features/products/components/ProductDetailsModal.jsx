@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { formatCOP } from '../utils/formatters';
+import { formatCOP } from '@utils/formatters.js';
 
 const ProductDetailsModal = ({ product, isOpen, onClose, onAddToCart }) => {
     const [selectedSize, setSelectedSize] = useState(null);

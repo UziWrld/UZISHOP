@@ -2,7 +2,7 @@
  * Order Model
  * Represents a complete purchase order and its validation logic.
  */
-import { CartItem } from './CartItem';
+import { CartItem } from '@cart/models/CartItem.js';
 
 export class Order {
     constructor(data = {}) {

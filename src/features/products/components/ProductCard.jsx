@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { formatCOP } from '@utils/formatters';
+import { formatCOP } from '@utils/formatters.js';
 
 const ProductCard = ({ product, onAddToCart, onCardClick }) => {
     const [isHovered, setIsHovered] = useState(false);

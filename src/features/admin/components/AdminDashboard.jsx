@@ -7,7 +7,7 @@ import CouponManagement from './CouponManagement';
 import SalesAnalytics from './SalesAnalytics';
 import CollectionManagement from './CollectionManagement';
 import SizeGuideManagement from './SizeGuideManagement';
-import '../../assets/css/admin.css';
+import '@assets/css/admin.css';
 
 const AdminDashboard = () => {
     const [products, setProducts] = useState([]);

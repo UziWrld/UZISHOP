@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCollections } from '@products/hooks/useCollections';
-import { scrollReveal, staggerReveal } from '@utils/gsap-animations';
+import { useCollections } from '@products/hooks/useCollections.js';
+import { scrollReveal, staggerReveal } from '@utils/gsap-animations.js';
 
 const FeaturedCollections = () => {
     const navigate = useNavigate();
@@ -38,7 +38,7 @@ const FeaturedCollections = () => {
             style={{ padding: '80px 5%', background: '#fff' }}
         >
             <div ref={titleRef} className="section-header" style={{ marginBottom: '60px', textAlign: 'center', opacity: 0 }}>
-                <h2 style={{ fontSize: '3rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '-1px', margin: 0 }}>Collections</h2>
+                <h2 style={{ fontSize: '3rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '-1px', margin: 0, color: '#000' }}>Collections</h2>
                 <p style={{ color: '#888', letterSpacing: '2px', fontSize: '0.9rem', marginTop: '10px' }}>CURATED FOR THE STREETS</p>
             </div>
 

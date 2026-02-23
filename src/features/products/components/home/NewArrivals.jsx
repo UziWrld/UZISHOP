@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { useProducts } from '@products/hooks/useProducts';
+import { useProducts } from '@products/hooks/useProducts.js';
 import { useNavigate } from 'react-router-dom';
-import { formatCOP } from '@utils/formatters';
-import { scrollReveal, staggerReveal } from '@utils/gsap-animations';
+import { formatCOP } from '@utils/formatters.js';
+import { scrollReveal, staggerReveal } from '@utils/gsap-animations.js';
 
 const NewArrivals = () => {
     const { allProducts } = useProducts();
@@ -142,7 +142,7 @@ const NewArrivals = () => {
                                     }}>SOLD OUT</div>
                                 )}
                             </div>
-                            <h3 style={{ fontSize: '1rem', fontWeight: '700', margin: '0 0 5px 0', textTransform: 'uppercase' }}>{product.name}</h3>
+                            <h3 style={{ fontSize: '1rem', fontWeight: '700', margin: '0 0 5px 0', textTransform: 'uppercase', color: '#000' }}>{product.name}</h3>
                             <p style={{ fontSize: '0.9rem', color: '#666', margin: 0 }}>{formatCOP(product.price)}</p>
                         </div>
                     ))}

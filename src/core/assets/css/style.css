@@ -121,44 +121,40 @@
 .carousel-btn.active {
     background: #000;
     color: #fff;
+}
 
-    /* Reset y variables */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Inter', sans-serif;
-    }
+/* Reset y variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
 
-    /* General */
-    html,
-    body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        overflow-x: hidden;
-        position: relative;
-    }
+/* General */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
+    background-color: #f8f8f8;
+    color: #000;
+}
 
-    body {
-        color: black;
-        background-color: #f8f8f8;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-    .App {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-
-    /* Header deprecado (ahora integrado en Navbar) */
-    .header {
-        display: none;
-    }
+#root,
+.App {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Navbar Unificada Streetwear Premium */
@@ -192,6 +188,16 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
 }
 
+.navbar.at-immersive.scrolled .nav-logo a,
+.navbar.at-immersive.scrolled .nav-links li a,
+.navbar.at-immersive.scrolled .nav-actions .bx,
+.navbar.at-immersive.scrolled .nav-actions button,
+.navbar.at-immersive.scrolled .nav-actions .nav-btn,
+.navbar.at-immersive.scrolled .nav-login-btn {
+    color: #000 !important;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
 /* White Text ONLY for Immersive State when NOT scrolled */
 .navbar.at-immersive:not(.scrolled):not(.menu-open) .nav-logo a,
 .navbar.at-immersive:not(.scrolled):not(.menu-open) .nav-links li a,
@@ -209,9 +215,17 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
+.navbar.not-at-home .nav-logo a,
+.navbar.not-at-home .nav-links li a,
+.navbar.not-at-home .nav-actions .bx,
+.navbar.not-at-home .nav-actions button,
+.navbar.not-at-home .nav-actions .nav-btn,
+.navbar.not-at-home .nav-login-btn,
 .navbar.menu-open .nav-logo a,
 .navbar.menu-open .nav-links li a,
 .navbar.menu-open .nav-actions .bx,
+.navbar.menu-open .nav-actions button,
+.navbar.menu-open .nav-actions .nav-btn,
 .navbar.menu-open .nav-login-btn {
     color: #000 !important;
     border-color: rgba(0, 0, 0, 0.2);
